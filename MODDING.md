@@ -53,16 +53,15 @@ JSON mods are best for simple characters that use the game's default attack and 
 | `mySrc` | Optional character image URL. |
 | `spriteKey` | Optional built-in sprite key, such as `p1Img` or `p2Img`. |
 | `speed` | Movement speed multiplier. `1` is normal. |
+| `jumpMultiplier` | Multiplies jump strength. `1` is normal; `1.5` jumps 50% higher. |
+| `canGlide` | If `true`, holding the jump key while falling activates gliding. |
+| `glideGravityMultiplier` | Gravity while gliding. Lower values create a slower descent; default is `0.06`. |
+| `glideFallSpeed` | Maximum downward speed while gliding; default is `2`. |
 | `attackMultiplier` | Multiplies damage dealt by the character. |
 | `sizeMultiplier` | Multiplies the character's width and height. |
 | `passiveFallDamage` | Enables the character's passive fall-damage behavior. |
 | `fallDamageMultiplier` | Multiplies fall damage. |
 | `keys` | Keyboard mapping for movement and actions. |
-
-### JavaScript Character class important properties
-| Property| Description|
-|---|---|
-|`fighter.percent`| Percentile of the player (Damage) Bottom left and right of screen.|
 
 A JSON file may also contain an array of characters:
 
@@ -109,6 +108,10 @@ Mods.registerCharacter({
   },
 
   speed: 1.25,
+  jumpMultiplier: 1.2,
+  canGlide: true,
+  glideGravityMultiplier: 0.08,
+  glideFallSpeed: 2.5,
   attackMultiplier: 1.2,
   passiveFallDamage: false,
   fallDamageMultiplier: 1
