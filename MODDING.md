@@ -63,6 +63,7 @@ JSON mods are best for simple characters that use the game's default attack and 
 | Property| Description|
 |---|---|
 |`fighter.percent`| Percentile of the player (Damage) Bottom left and right of screen.|
+
 A JSON file may also contain an array of characters:
 
 ```json
