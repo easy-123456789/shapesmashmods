@@ -1,9 +1,9 @@
 Mods.registerGameplayMod({
   onFrame({ p1, p2, gameOver }) {
     if (gameOver || !p1 || !p2) return;
-
-    // Low-gravity effect.
-    p1.vy *= Math.random();
-    p2.vy *= Math.random();
+    grav = Math.random() + 0.2;
+    // Random-gravity effect.
+    p1.vy *= grav;
+    p2.vy *= grav;
   }
 })
