@@ -1,16 +1,57 @@
+
 Mods.registerGameplayMod({
-  onHit({ attacker, defender, damage, source }) {
-    // Make sure char has a topstreak
-    if(!attacker.topstreak) attacker.topstreak = 0;
-    if(Math.random() <= 0.01){
-      defender.percent -= (10 * attacker.attackMultiplier);
-      addCommentary(`${attacker.name} Lands a crit!`);
+  onHit({ attacker, defender, source }) {
+    if (!attacker || !defender) return;
+    if (source !== 'attack') return;
+
+    const multiplier = attacker.attackMultiplier || 1;
+
+    // Initialize Poptart's streak values.
+    attacker.topstreak = attacker.topstreak || 0;
+    attacker.downCritUsed = attacker.downCritUsed || false;
+
+    // 1% chance of a regular critical hit.
+    if (Math.random() <= 0.01) {
+      const critDamage = 10 * multiplier;
+      defender.percent += critDamage;
+
+      addCommentary(
+        `${attacker.name} lands a CRIT! +${critDamage}%`
+      );
     }
-    if(attacker.vy > 0){
-      attacker.topstreak += 1;
-      defender.percent -= (5 * (attacker.topstreak + 1));
-      addCommentary(`${attacker.name} Lands a down crit!`)
-      
+
+    // Falling attacks trigger one down crit per airborne sequence.
+    if (attacker.vy > 0 && !attacker.downCritUsed) {
+      attacker.downCritUsed = true;
+      attacker.topstreak++;
+
+      const downCritDamage =
+        5 * (attacker.topstreak + 1) * multiplier;
+
+      defender.percent += downCritDamage;
+
+      addCommentary(
+        `${attacker.name} lands a down crit! +${downCritDamage}%`
+      );
     }
+
+    // Reset the streak after the attacker stops falling.
+    if (attacker.vy <= 0) {
+      attacker.downCritUsed = false;
+      attacker.topstreak = 0;
+    }
+  },
+
+  onStockLost({ fighter }) {
+    if (!fighter) return;
+
+    fighter.topstreak = 0;
+    fighter.downCritUsed = false;
+  },
+
+  onGameOver({ winner, loser, text }) {
+    console.log(
+      `${text} Winner: ${winner?.name}, Loser: ${loser?.name}`
+    );
   }
-})
+});
