@@ -41,10 +41,6 @@ Mods.registerGameplayMod({
 
    },
 
-  onHit({ attacker, defender, damage, source }) {
-    defender.percent += 3;
-    addCommentary(attacker.name + ' deals bonus damage!');
-  },
 
   onStockLost({ fighter, stocksRemaining }) {
     addCommentary(fighter.name + ' lost a stock!');
