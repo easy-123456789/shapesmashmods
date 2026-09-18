@@ -7,7 +7,7 @@ Mods.registerCharacter({
   color: '#22dd99',
   upSpecial(fighter, opponent){
     if(Math.random() < 0.5){
-      for(let i = 0; i < getRandomIntInclusive(1.10); i++){
+      for(let i = 0; i < getRandomIntInclusive(1,10); i++){
         fighter.specialCooldown = 0;
         fighter.special(opponent);
       }
