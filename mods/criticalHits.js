@@ -26,7 +26,7 @@ Mods.registerGameplayMod({
       attacker.topstreak++;
 
       const downCritDamage =
-        5 * (attacker.topstreak + 1) * multiplier;
+        1 * (attacker.topstreak + 1) * multiplier;
 
       defender.percent += downCritDamage;
 
