@@ -14,5 +14,13 @@ Mods.registerCharacter({
     } else {
       opponent.percent += 20;
     }
+  },
+  downSpecial(fighter, opponent){
+    args = [fighter, opponent]
+    let r = getRandomIntInclusive(0, 3);
+    if (r = 3) {
+      args.splice(1, 0, fighter.direction);
+    }
+    opponent.specials[r](...args)
   }
 })
