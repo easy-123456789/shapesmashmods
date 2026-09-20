@@ -22,7 +22,7 @@ Mods.registerCharacter({
 
   downSpecial(fighter, opponent) {
     const r = getRandomIntInclusive(0, 3);
-    const args = [opponent, fighter];
+    const args = [fighter, opponent];
 
     // Directional specials use (fighter, direction, opponent).
     if (r === 3) {
