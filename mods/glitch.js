@@ -16,10 +16,10 @@ Mods.registerCharacter({
     }
   },
   downSpecial(fighter, opponent){
-    args = [fighter, opponent]
+    const args = [fighter, opponent];
     let r = getRandomIntInclusive(0, 3);
-    if (r = 3) {
-      args.splice(1, 0, fighter.direction);
+    if (r === 3) {
+      args.splice(1, 0, fighter.facing
     }
     opponent.specials[r](...args);
   }
