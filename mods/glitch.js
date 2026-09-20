@@ -21,6 +21,6 @@ Mods.registerCharacter({
     if (r = 3) {
       args.splice(1, 0, fighter.direction);
     }
-    opponent.specials[r](...args)
+    opponent.specials[r](...args);
   }
 })
