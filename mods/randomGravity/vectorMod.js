@@ -3,7 +3,7 @@ Mods.registerGameplayMod({
     if (gameOver || !p1 || !p2) return;
     grav = Math.random() + 1;
     // Random-gravity effect.
-    p1.vy = Math.random() * 25 - 10;
-    p2.vy = Math.random() * 25 - 10;
+    p1.vx = Math.random() * 20 - 10;
+    p2.vx = Math.random() * 20 - 10;
   }
 })
