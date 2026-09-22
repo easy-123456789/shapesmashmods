@@ -1,0 +1,5 @@
+{
+  "icon":"icon.webp",
+  "files_to_run":["criticalHits.js"],
+  "name":"Critical Hits"
+}
