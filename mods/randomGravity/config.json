@@ -1,5 +1,5 @@
 {
   "name":"Random Vectors",
-  "files_to_run":["randomGravity.js"],
+  "files_to_run":["vectorMod.js"],
   "icon":"icon.webp"
 }
