@@ -1,7 +1,17 @@
 # ShapeSmash Modding Guide
 
 This guide explains how to create character mods and gameplay mods for ShapeSmash using **JSON** or **JavaScript**.
+## Particles Example
+```javascript
 
+          particles.push(new Particle(
+            30,
+            '#ffee44',
+            opponent.x + opponent.w / 2,
+            opponent.y - opponent.h / 2
+          )
+```
+new Particle(duration, color, x, y);
 ## Loading a mod
 
 Open the **🧩 Mods** menu and either:
