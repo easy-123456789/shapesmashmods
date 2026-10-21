@@ -29,7 +29,7 @@
         state.flipUntil = performance.now() + 700;
         setStageFlip(true);
         addCommentary('FINAL SMASH! Screen flip!');
-      } else if (state.flipActive && performance.now() > state.flipUntil) {
+      } else if (state.flipActive) {
         state.flipActive = false;
         setStageFlip(false);
       }
