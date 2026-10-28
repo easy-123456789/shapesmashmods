@@ -20,7 +20,6 @@
       }
 
       * { box-sizing: border-box; }
-
       body {
         margin: 0;
         min-height: 100vh;
@@ -28,39 +27,32 @@
         background: linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
         color: var(--text);
       }
-
       .container {
-        max-width: 1500px;
+        max-width: 1600px;
         margin: 0 auto;
         padding: 24px 18px 48px;
       }
-
       h1 {
-        margin: 0 0 8px;
+        margin: 0 0 10px;
         font-size: clamp(2rem, 4vw, 3rem);
       }
-
       .subtitle {
         margin-bottom: 18px;
         color: var(--muted);
       }
-
       .layout {
         display: grid;
         grid-template-columns: minmax(360px, 520px) minmax(420px, 1fr);
         gap: 22px;
       }
-
       .panel {
         border: 1px solid var(--border);
         background: rgba(17, 24, 39, 0.96);
         border-radius: 18px;
         box-shadow: 0 18px 40px rgba(0, 0, 0, 0.2);
       }
-
       .controls { padding: 18px; }
       .preview { padding: 16px; }
-
       .section {
         border: 1px solid var(--border);
         border-radius: 14px;
@@ -68,72 +60,60 @@
         margin-bottom: 14px;
         background: rgba(15, 23, 42, 0.72);
       }
-
       .section-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
         margin-bottom: 10px;
       }
-
       .section-title {
         font-weight: 700;
         letter-spacing: 0.02em;
       }
-
       .form-grid {
         display: grid;
         grid-template-columns: repeat(2, minmax(130px, 1fr));
         gap: 10px 12px;
       }
-
       .field {
         display: grid;
         gap: 6px;
       }
-
       .field.full {
         grid-column: 1 / -1;
       }
-
       label {
         font-size: 0.82rem;
         color: var(--muted);
       }
-
       input, select, textarea, button {
         border-radius: 10px;
         border: 1px solid var(--border);
         font: inherit;
       }
-
       input, select {
         background: var(--panel-2);
         color: var(--text);
         padding: 9px 10px;
       }
-
       input[type="checkbox"] {
         width: 18px;
         height: 18px;
       }
-
       input[type="color"] {
         min-height: 42px;
         padding: 4px;
         background: #0f172a;
       }
-
       .checkbox-row {
         display: flex;
         align-items: center;
         gap: 8px;
         min-height: 42px;
       }
-
       textarea {
         width: 100%;
-        min-height: 560px;
+        min-height: 590px;
         resize: vertical;
         background: var(--code);
         color: #dbeafe;
@@ -141,39 +121,32 @@
         line-height: 1.45;
         padding: 16px;
       }
-
       .button-row {
         display: flex;
         flex-wrap: wrap;
         gap: 10px;
       }
-
       button {
         cursor: pointer;
         padding: 10px 14px;
         font-weight: 700;
         transition: transform 0.12s ease, opacity 0.12s ease;
       }
-
       button:hover { transform: translateY(-1px); }
-
       .primary {
         background: linear-gradient(135deg, var(--accent), #2563eb);
         border-color: transparent;
         color: white;
       }
-
       .secondary {
         background: var(--panel-2);
         color: var(--text);
       }
-
       .success {
         background: rgba(52, 211, 153, 0.12);
         border-color: rgba(52, 211, 153, 0.4);
         color: #bbf7d0;
       }
-
       .preview-header {
         display: flex;
         justify-content: space-between;
@@ -181,7 +154,6 @@
         gap: 12px;
         margin-bottom: 10px;
       }
-
       .live-badge {
         display: inline-flex;
         align-items: center;
@@ -193,7 +165,6 @@
         padding: 6px 10px;
         font-size: 0.8rem;
       }
-
       .dot {
         width: 9px;
         height: 9px;
@@ -201,7 +172,6 @@
         background: var(--green);
         display: inline-block;
       }
-
       @media (max-width: 980px) {
         .layout { grid-template-columns: 1fr; }
       }
@@ -210,7 +180,7 @@
   <body>
     <div class="container">
       <h1>ShapeSmash Mod Generator</h1>
-      <div class="subtitle">Pick a fighter, choose an attack style, customize the numbers, and export a JavaScript mod.</div>
+      <div class="subtitle">Build a fighter with custom attacks, directional special moves, final smashes, and an image layer.</div>
 
       <div class="layout">
         <section class="panel controls">
@@ -302,6 +272,10 @@
                   <option value="dash">Dash</option>
                   <option value="snare">Snare</option>
                   <option value="orbital">Orbital</option>
+                  <option value="upspec">Up Special</option>
+                  <option value="downspec">Down Special</option>
+                  <option value="leftspec">Left Special</option>
+                  <option value="rightspec">Right Special</option>
                 </select>
               </div>
               <div class="field full">
@@ -327,6 +301,10 @@
                   <option value="nova">Nova Break</option>
                   <option value="shadow">Shadow Finish</option>
                   <option value="storm">Storm Rush</option>
+                  <option value="upsmash">Up Smash</option>
+                  <option value="downsmash">Down Smash</option>
+                  <option value="leftsmash">Left Smash</option>
+                  <option value="rightsmash">Right Smash</option>
                 </select>
               </div>
               <div class="field full">
@@ -430,125 +408,385 @@
     <script src="./helpers/modMaker.js"></script>
     <script>
       const fighterPresets = {
-        custom: {
-          key: 'custom-fighter', name: 'Custom Fighter', color: '#38bdf8', mySrc: '', spriteKey: '', description: 'A flexible arena fighter.',
-          speed: 1.3, jumpMultiplier: 1.2, canGlide: true, glideGravityMultiplier: 0.08, glideFallSpeed: 2.3, sizeMultiplier: 1.0,
-          attackMultiplier: 1.5, fallDamageMultiplier: 1.0, passiveFallDamage: false, specialPower: 18, specialCooldown: 45,
-          attackWindup: 10, attackRange: 26, attackKnockback: 15, attackSpeed: 1.2, projectileSpeed: 14, leapStrength: 12, effectRadius: 18,
-          leftKey: 'a', rightKey: 'd', jumpKey: 'w', attackKey: 'f', finalKey: 'g', specialKey: 's'
-        },
-        brawler: {
-          key: 'brawler', name: 'Brawler', color: '#f97316', mySrc: '', spriteKey: '', description: 'A close-range bruiser who wins by pressure.',
-          speed: 1.0, jumpMultiplier: 1.0, canGlide: false, glideGravityMultiplier: 0.07, glideFallSpeed: 2.2, sizeMultiplier: 1.2,
-          attackMultiplier: 1.9, fallDamageMultiplier: 1.2, passiveFallDamage: true, specialPower: 25, specialCooldown: 60,
-          attackWindup: 12, attackRange: 24, attackKnockback: 22, attackSpeed: 1.0, projectileSpeed: 12, leapStrength: 15, effectRadius: 20,
-          leftKey: 'a', rightKey: 'd', jumpKey: 'w', attackKey: 'f', finalKey: 'g', specialKey: 's'
-        },
-        speedster: {
-          key: 'speedster', name: 'Speedster', color: '#22c55e', mySrc: '', spriteKey: '', description: 'A quick skirmisher that overwhelms with movement.',
-          speed: 1.7, jumpMultiplier: 1.25, canGlide: true, glideGravityMultiplier: 0.06, glideFallSpeed: 2.6, sizeMultiplier: 0.95,
-          attackMultiplier: 1.25, fallDamageMultiplier: 0.9, passiveFallDamage: false, specialPower: 16, specialCooldown: 35,
-          attackWindup: 8, attackRange: 28, attackKnockback: 12, attackSpeed: 1.5, projectileSpeed: 18, leapStrength: 13, effectRadius: 16,
-          leftKey: 'a', rightKey: 'd', jumpKey: 'w', attackKey: 'f', finalKey: 'g', specialKey: 's'
-        },
-        glass: {
-          key: 'glass-cannon', name: 'Glass Cannon', color: '#f43f5e', mySrc: '', spriteKey: '', description: 'A fragile monster with massive burst damage.',
-          speed: 1.2, jumpMultiplier: 1.15, canGlide: false, glideGravityMultiplier: 0.07, glideFallSpeed: 2.4, sizeMultiplier: 0.9,
-          attackMultiplier: 2.4, fallDamageMultiplier: 1.2, passiveFallDamage: false, specialPower: 24, specialCooldown: 48,
-          attackWindup: 9, attackRange: 30, attackKnockback: 18, attackSpeed: 1.45, projectileSpeed: 20, leapStrength: 14, effectRadius: 20,
-          leftKey: 'a', rightKey: 'd', jumpKey: 'w', attackKey: 'f', finalKey: 'g', specialKey: 's'
-        },
-        tank: {
-          key: 'tank', name: 'Tank', color: '#64748b', mySrc: '', spriteKey: '', description: 'A resilient defender who absorbs pressure.',
-          speed: 0.85, jumpMultiplier: 0.9, canGlide: true, glideGravityMultiplier: 0.09, glideFallSpeed: 1.8, sizeMultiplier: 1.4,
-          attackMultiplier: 1.6, fallDamageMultiplier: 1.6, passiveFallDamage: true, specialPower: 19, specialCooldown: 58,
-          attackWindup: 15, attackRange: 22, attackKnockback: 25, attackSpeed: 0.8, projectileSpeed: 10, leapStrength: 11, effectRadius: 24,
-          leftKey: 'a', rightKey: 'd', jumpKey: 'w', attackKey: 'f', finalKey: 'g', specialKey: 's'
-        },
-        ranger: {
-          key: 'ranger', name: 'Ranger', color: '#0ea5e9', mySrc: '', spriteKey: '', description: 'A precision fighter controlling space.',
-          speed: 1.2, jumpMultiplier: 1.1, canGlide: true, glideGravityMultiplier: 0.08, glideFallSpeed: 2.2, sizeMultiplier: 1.0,
-          attackMultiplier: 1.45, fallDamageMultiplier: 1.0, passiveFallDamage: false, specialPower: 20, specialCooldown: 52,
-          attackWindup: 11, attackRange: 32, attackKnockback: 14, attackSpeed: 1.25, projectileSpeed: 18, leapStrength: 12, effectRadius: 18,
-          leftKey: 'a', rightKey: 'd', jumpKey: 'w', attackKey: 'f', finalKey: 'g', specialKey: 's'
-        },
-        acrobat: {
-          key: 'acrobat', name: 'Acrobat', color: '#a78bfa', mySrc: '', spriteKey: '', description: 'A nimble aerial specialist.',
-          speed: 1.45, jumpMultiplier: 1.45, canGlide: true, glideGravityMultiplier: 0.05, glideFallSpeed: 2.9, sizeMultiplier: 0.92,
-          attackMultiplier: 1.3, fallDamageMultiplier: 0.9, passiveFallDamage: false, specialPower: 17, specialCooldown: 38,
-          attackWindup: 7, attackRange: 28, attackKnockback: 13, attackSpeed: 1.6, projectileSpeed: 15, leapStrength: 16, effectRadius: 17,
-          leftKey: 'a', rightKey: 'd', jumpKey: 'w', attackKey: 'f', finalKey: 'g', specialKey: 's'
-        },
-        mage: {
-          key: 'mage', name: 'Mage', color: '#8b5cf6', mySrc: '', spriteKey: '', description: 'A caster focused on spell bursts.',
-          speed: 1.12, jumpMultiplier: 1.16, canGlide: true, glideGravityMultiplier: 0.067, glideFallSpeed: 2.35, sizeMultiplier: 0.96,
-          attackMultiplier: 1.7, fallDamageMultiplier: 0.95, passiveFallDamage: false, specialPower: 28, specialCooldown: 65,
-          attackWindup: 12, attackRange: 34, attackKnockback: 16, attackSpeed: 1.15, projectileSpeed: 22, leapStrength: 14, effectRadius: 22,
-          leftKey: 'a', rightKey: 'd', jumpKey: 'w', attackKey: 'f', finalKey: 'g', specialKey: 's'
-        },
-        support: {
-          key: 'support', name: 'Support', color: '#2dd4bf', mySrc: '', spriteKey: '', description: 'A utility fighter controlling tempo and space.',
-          speed: 1.08, jumpMultiplier: 1.1, canGlide: true, glideGravityMultiplier: 0.065, glideFallSpeed: 2.15, sizeMultiplier: 1.05,
-          attackMultiplier: 1.2, fallDamageMultiplier: 0.8, passiveFallDamage: false, specialPower: 15, specialCooldown: 42,
-          attackWindup: 10, attackRange: 27, attackKnockback: 12, attackSpeed: 1.1, projectileSpeed: 16, leapStrength: 12, effectRadius: 19,
-          leftKey: 'a', rightKey: 'd', jumpKey: 'w', attackKey: 'f', finalKey: 'g', specialKey: 's'
-        },
-        shadow: {
-          key: 'shadow-assassin', name: 'Shadow Assassin', color: '#111827', mySrc: '', spriteKey: '', description: 'A stealthy assassin built for fast, lethal bursts.',
-          speed: 1.6, jumpMultiplier: 1.35, canGlide: true, glideGravityMultiplier: 0.06, glideFallSpeed: 2.8, sizeMultiplier: 0.88,
-          attackMultiplier: 1.8, fallDamageMultiplier: 0.95, passiveFallDamage: false, specialPower: 21, specialCooldown: 40,
-          attackWindup: 7, attackRange: 26, attackKnockback: 18, attackSpeed: 1.7, projectileSpeed: 17, leapStrength: 15, effectRadius: 16,
-          leftKey: 'a', rightKey: 'd', jumpKey: 'w', attackKey: 'f', finalKey: 'g', specialKey: 's'
-        }
+        custom: { key:'custom-fighter', name:'Custom Fighter', color:'#38bdf8', mySrc:'', spriteKey:'', description:'A flexible arena fighter.', speed:1.3, jumpMultiplier:1.2, canGlide:true, glideGravityMultiplier:0.08, glideFallSpeed:2.3, sizeMultiplier:1.0, attackMultiplier:1.5, fallDamageMultiplier:1.0, passiveFallDamage:false, specialPower:18, specialCooldown:45, attackWindup:10, attackRange:26, attackKnockback:15, attackSpeed:1.2, projectileSpeed:14, leapStrength:12, effectRadius:18, leftKey:'a', rightKey:'d', jumpKey:'w', attackKey:'f', finalKey:'g', specialKey:'s' },
+        brawler: { key:'brawler', name:'Brawler', color:'#f97316', mySrc:'', spriteKey:'', description:'A bruiser that wins by pressure.', speed:1.0, jumpMultiplier:1.0, canGlide:false, glideGravityMultiplier:0.07, glideFallSpeed:2.2, sizeMultiplier:1.2, attackMultiplier:1.9, fallDamageMultiplier:1.2, passiveFallDamage:true, specialPower:25, specialCooldown:60, attackWindup:12, attackRange:24, attackKnockback:22, attackSpeed:1.0, projectileSpeed:12, leapStrength:15, effectRadius:20, leftKey:'a', rightKey:'d', jumpKey:'w', attackKey:'f', finalKey:'g', specialKey:'s' },
+        speedster: { key:'speedster', name:'Speedster', color:'#22c55e', mySrc:'', spriteKey:'', description:'A skirmisher that overwhelms with movement.', speed:1.7, jumpMultiplier:1.25, canGlide:true, glideGravityMultiplier:0.06, glideFallSpeed:2.6, sizeMultiplier:0.95, attackMultiplier:1.25, fallDamageMultiplier:0.9, passiveFallDamage:false, specialPower:16, specialCooldown:35, attackWindup:8, attackRange:28, attackKnockback:12, attackSpeed:1.5, projectileSpeed:18, leapStrength:13, effectRadius:16, leftKey:'a', rightKey:'d', jumpKey:'w', attackKey:'f', finalKey:'g', specialKey:'s' },
+        glass: { key:'glass-cannon', name:'Glass Cannon', color:'#f43f5e', mySrc:'', spriteKey:'', description:'A fragile monster with massive burst damage.', speed:1.2, jumpMultiplier:1.15, canGlide:false, glideGravityMultiplier:0.07, glideFallSpeed:2.4, sizeMultiplier:0.9, attackMultiplier:2.4, fallDamageMultiplier:1.2, passiveFallDamage:false, specialPower:24, specialCooldown:48, attackWindup:9, attackRange:30, attackKnockback:18, attackSpeed:1.45, projectileSpeed:20, leapStrength:14, effectRadius:20, leftKey:'a', rightKey:'d', jumpKey:'w', attackKey:'f', finalKey:'g', specialKey:'s' },
+        tank: { key:'tank', name:'Tank', color:'#64748b', mySrc:'', spriteKey:'', description:'A resilient defender who absorbs pressure.', speed:0.85, jumpMultiplier:0.9, canGlide:true, glideGravityMultiplier:0.09, glideFallSpeed:1.8, sizeMultiplier:1.4, attackMultiplier:1.6, fallDamageMultiplier:1.6, passiveFallDamage:true, specialPower:19, specialCooldown:58, attackWindup:15, attackRange:22, attackKnockback:25, attackSpeed:0.8, projectileSpeed:10, leapStrength:11, effectRadius:24, leftKey:'a', rightKey:'d', jumpKey:'w', attackKey:'f', finalKey:'g', specialKey:'s' },
+        ranger: { key:'ranger', name:'Ranger', color:'#0ea5e9', mySrc:'', spriteKey:'', description:'A precision fighter controlling space.', speed:1.2, jumpMultiplier:1.1, canGlide:true, glideGravityMultiplier:0.08, glideFallSpeed:2.2, sizeMultiplier:1.0, attackMultiplier:1.45, fallDamageMultiplier:1.0, passiveFallDamage:false, specialPower:20, specialCooldown:52, attackWindup:11, attackRange:32, attackKnockback:14, attackSpeed:1.25, projectileSpeed:18, leapStrength:12, effectRadius:18, leftKey:'a', rightKey:'d', jumpKey:'w', attackKey:'f', finalKey:'g', specialKey:'s' },
+        acrobat: { key:'acrobat', name:'Acrobat', color:'#a78bfa', mySrc:'', spriteKey:'', description:'A nimble aerial specialist.', speed:1.45, jumpMultiplier:1.45, canGlide:true, glideGravityMultiplier:0.05, glideFallSpeed:2.9, sizeMultiplier:0.92, attackMultiplier:1.3, fallDamageMultiplier:0.9, passiveFallDamage:false, specialPower:17, specialCooldown:38, attackWindup:7, attackRange:28, attackKnockback:13, attackSpeed:1.6, projectileSpeed:15, leapStrength:16, effectRadius:17, leftKey:'a', rightKey:'d', jumpKey:'w', attackKey:'f', finalKey:'g', specialKey:'s' },
+        mage: { key:'mage', name:'Mage', color:'#8b5cf6', mySrc:'', spriteKey:'', description:'A caster focused on spell bursts.', speed:1.12, jumpMultiplier:1.16, canGlide:true, glideGravityMultiplier:0.067, glideFallSpeed:2.35, sizeMultiplier:0.96, attackMultiplier:1.7, fallDamageMultiplier:0.95, passiveFallDamage:false, specialPower:28, specialCooldown:65, attackWindup:12, attackRange:34, attackKnockback:16, attackSpeed:1.15, projectileSpeed:22, leapStrength:14, effectRadius:22, leftKey:'a', rightKey:'d', jumpKey:'w', attackKey:'f', finalKey:'g', specialKey:'s' },
+        support: { key:'support', name:'Support', color:'#2dd4bf', mySrc:'', spriteKey:'', description:'A utility fighter controlling tempo and space.', speed:1.08, jumpMultiplier:1.1, canGlide:true, glideGravityMultiplier:0.065, glideFallSpeed:2.15, sizeMultiplier:1.05, attackMultiplier:1.2, fallDamageMultiplier:0.8, passiveFallDamage:false, specialPower:15, specialCooldown:42, attackWindup:10, attackRange:27, attackKnockback:12, attackSpeed:1.1, projectileSpeed:16, leapStrength:12, effectRadius:19, leftKey:'a', rightKey:'d', jumpKey:'w', attackKey:'f', finalKey:'g', specialKey:'s' },
+        shadow: { key:'shadow-assassin', name:'Shadow Assassin', color:'#111827', mySrc:'', spriteKey:'', description:'A stealthy assassin built for fast, lethal bursts.', speed:1.6, jumpMultiplier:1.35, canGlide:true, glideGravityMultiplier:0.06, glideFallSpeed:2.8, sizeMultiplier:0.88, attackMultiplier:1.8, fallDamageMultiplier:0.95, passiveFallDamage:false, specialPower:21, specialCooldown:40, attackWindup:7, attackRange:26, attackKnockback:18, attackSpeed:1.7, projectileSpeed:17, leapStrength:15, effectRadius:16, leftKey:'a', rightKey:'d', jumpKey:'w', attackKey:'f', finalKey:'g', specialKey:'s' }
       };
 
       const attackPresets = {
-        custom: { label: 'Custom attack', attackType: 'custom', attackWindup: 10, attackRange: 26, attackKnockback: 15, attackSpeed: 1.2, projectileSpeed: 14, leapStrength: 12, effectRadius: 18, attackText: 'strikes with a custom finisher!' },
-        jab: { label: 'Jab', attackType: 'jab', attackWindup: 6, attackRange: 18, attackKnockback: 10, attackSpeed: 1.7, projectileSpeed: 8, leapStrength: 8, effectRadius: 10, attackText: 'fires a quick jab and keeps the pressure up!' },
-        uppercut: { label: 'Uppercut', attackType: 'uppercut', attackWindup: 11, attackRange: 20, attackKnockback: 21, attackSpeed: 0.9, projectileSpeed: 7, leapStrength: 14, effectRadius: 12, attackText: 'drives upward with a crushing uppercut!' },
-        slash: { label: 'Arc Slash', attackType: 'slash', attackWindup: 9, attackRange: 28, attackKnockback: 16, attackSpeed: 1.3, projectileSpeed: 12, leapStrength: 10, effectRadius: 16, attackText: 'slashes in a wide arc and cuts through space!' },
-        lunge: { label: 'Lunge', attackType: 'lunge', attackWindup: 8, attackRange: 30, attackKnockback: 17, attackSpeed: 1.5, projectileSpeed: 11, leapStrength: 18, effectRadius: 14, attackText: 'lunges forward like a spear through the air!' },
-        spin: { label: 'Spin Kick', attackType: 'spin', attackWindup: 10, attackRange: 26, attackKnockback: 20, attackSpeed: 1.35, projectileSpeed: 10, leapStrength: 9, effectRadius: 21, attackText: 'spins through the lane and kicks out with force!' },
-        dash: { label: 'Dash Strike', attackType: 'dash', attackWindup: 7, attackRange: 32, attackKnockback: 15, attackSpeed: 1.7, projectileSpeed: 13, leapStrength: 12, effectRadius: 12, attackText: 'dashes in for a heavy follow-up strike!' },
-        sweep: { label: 'Sweep', attackType: 'sweep', attackWindup: 12, attackRange: 24, attackKnockback: 19, attackSpeed: 0.95, projectileSpeed: 9, leapStrength: 8, effectRadius: 20, attackText: 'sweeps the ground and trips the target!' },
-        burst: { label: 'Burst Blast', attackType: 'burst', attackWindup: 9, attackRange: 35, attackKnockback: 18, attackSpeed: 1.25, projectileSpeed: 19, leapStrength: 11, effectRadius: 15, attackText: 'bursts forward with a bright energy blast!' },
-        beam: { label: 'Beam', attackType: 'beam', attackWindup: 15, attackRange: 40, attackKnockback: 14, attackSpeed: 0.8, projectileSpeed: 24, leapStrength: 10, effectRadius: 13, attackText: 'focuses a heavy beam down the lane!' },
-        volley: { label: 'Volley', attackType: 'volley', attackWindup: 12, attackRange: 38, attackKnockback: 13, attackSpeed: 1.1, projectileSpeed: 20, leapStrength: 11, effectRadius: 14, attackText: 'launches a rapid volley of strikes!' },
-        hook: { label: 'Hook', attackType: 'hook', attackWindup: 8, attackRange: 20, attackKnockback: 15, attackSpeed: 1.5, projectileSpeed: 7, leapStrength: 9, effectRadius: 11, attackText: 'hooks in with a nasty, fast counter-punch!' },
-        hammer: { label: 'Hammer', attackType: 'hammer', attackWindup: 14, attackRange: 22, attackKnockback: 26, attackSpeed: 0.7, projectileSpeed: 8, leapStrength: 15, effectRadius: 24, attackText: 'drops a heavy hammer strike onto the target!' },
-        drill: { label: 'Drill', attackType: 'drill', attackWindup: 10, attackRange: 26, attackKnockback: 20, attackSpeed: 1.45, projectileSpeed: 13, leapStrength: 13, effectRadius: 18, attackText: 'drills through the target with a spinning impact!' },
-        meteor: { label: 'Meteor', attackType: 'meteor', attackWindup: 16, attackRange: 36, attackKnockback: 28, attackSpeed: 0.75, projectileSpeed: 18, leapStrength: 17, effectRadius: 24, attackText: 'brings down a fiery meteor crash!' },
-        nova: { label: 'Nova', attackType: 'nova', attackWindup: 18, attackRange: 42, attackKnockback: 22, attackSpeed: 0.65, projectileSpeed: 22, leapStrength: 12, effectRadius: 28, attackText: 'erupts in a radiant nova burst!' },
-        whip: { label: 'Whip', attackType: 'whip', attackWindup: 9, attackRange: 34, attackKnockback: 12, attackSpeed: 1.25, projectileSpeed: 16, leapStrength: 10, effectRadius: 15, attackText: 'snaps a whipping arc across the field!' },
-        stomp: { label: 'Stomp', attackType: 'stomp', attackWindup: 14, attackRange: 20, attackKnockback: 24, attackSpeed: 0.8, projectileSpeed: 7, leapStrength: 20, effectRadius: 26, attackText: 'drops a brutal ground stomp!' },
-        orb: { label: 'Orb', attackType: 'orb', attackWindup: 10, attackRange: 31, attackKnockback: 16, attackSpeed: 1.1, projectileSpeed: 20, leapStrength: 12, effectRadius: 18, attackText: 'launches a glowing orb of force!' },
-        snare: { label: 'Snare', attackType: 'snare', attackWindup: 11, attackRange: 28, attackKnockback: 13, attackSpeed: 1.0, projectileSpeed: 15, leapStrength: 9, effectRadius: 17, attackText: 'fires a snare trap that catches the target!' },
-        tornado: { label: 'Tornado', attackType: 'tornado', attackWindup: 13, attackRange: 30, attackKnockback: 19, attackSpeed: 1.0, projectileSpeed: 15, leapStrength: 13, effectRadius: 23, attackText: 'spins up a destructive tornado of force!' },
-        cross: { label: 'Cross Strike', attackType: 'cross', attackWindup: 10, attackRange: 22, attackKnockback: 17, attackSpeed: 1.3, projectileSpeed: 11, leapStrength: 11, effectRadius: 13, attackText: 'fires a clean cross strike with perfect timing!' },
-        airslash: { label: 'Aerial Slash', attackType: 'airslash', attackWindup: 8, attackRange: 30, attackKnockback: 18, attackSpeed: 1.5, projectileSpeed: 12, leapStrength: 17, effectRadius: 18, attackText: 'slashes through the air with an aerial finisher!' },
-        shieldbash: { label: 'Shield Bash', attackType: 'shieldbash', attackWindup: 12, attackRange: 24, attackKnockback: 23, attackSpeed: 0.9, projectileSpeed: 7, leapStrength: 10, effectRadius: 20, attackText: 'charges a heavy shield bash and knocks them back!' },
-        divine: { label: 'Divine Wave', attackType: 'divine', attackWindup: 15, attackRange: 40, attackKnockback: 17, attackSpeed: 0.8, projectileSpeed: 21, leapStrength: 12, effectRadius: 25, attackText: 'releases a radiant divine wave!' },
-        shadow: { label: 'Shadow Cut', attackType: 'shadow', attackWindup: 7, attackRange: 27, attackKnockback: 19, attackSpeed: 1.7, projectileSpeed: 17, leapStrength: 14, effectRadius: 15, attackText: 'cuts through the darkness with a sharp shadow strike!' }
+        custom: {
+          label: 'Custom attack',
+          attackType: 'custom',
+          attackWindup: 10,
+          attackRange: 26,
+          attackKnockback: 15,
+          attackSpeed: 1.2,
+          projectileSpeed: 14,
+          leapStrength: 12,
+          effectRadius: 18,
+          moveText: 'cuts through the arena with a custom finisher!',
+          attackCode: `fighter.vx += fighter.facing * 14; if (opponent) { opponent.vx += fighter.facing * 12; opponent.vy -= 3; } addCommentary(fighter.name + ' ${'custom'} ${'finisher!'}');`
+        },
+        jab: {
+          label: 'Jab',
+          attackType: 'jab',
+          attackWindup: 6,
+          attackRange: 18,
+          attackKnockback: 10,
+          attackSpeed: 1.7,
+          projectileSpeed: 8,
+          leapStrength: 8,
+          effectRadius: 10,
+          moveText: 'fires a rapid jab and keeps the pressure on!',
+          attackCode: `fighter.vx += fighter.facing * 10; if (opponent) { opponent.vx += fighter.facing * 7; opponent.vy -= 2; } addCommentary(fighter.name + ' throws a quick jab!');`
+        },
+        uppercut: {
+          label: 'Uppercut',
+          attackType: 'uppercut',
+          attackWindup: 11,
+          attackRange: 20,
+          attackKnockback: 21,
+          attackSpeed: 0.9,
+          projectileSpeed: 7,
+          leapStrength: 14,
+          effectRadius: 12,
+          moveText: 'launches upward with a crushing uppercut!',
+          attackCode: `fighter.vy -= 8; fighter.vx += fighter.facing * 6; if (opponent) { opponent.vy -= 10; opponent.vx += fighter.facing * 9; } addCommentary(fighter.name + ' hammers upward!');`
+        },
+        slash: {
+          label: 'Arc Slash',
+          attackType: 'slash',
+          attackWindup: 9,
+          attackRange: 28,
+          attackKnockback: 16,
+          attackSpeed: 1.3,
+          projectileSpeed: 12,
+          leapStrength: 10,
+          effectRadius: 16,
+          moveText: 'slashes in a bright arc and carves open space!',
+          attackCode: `fighter.vx += fighter.facing * 16; if (opponent) { opponent.vx += fighter.facing * 10; opponent.vy -= 4; } addCommentary(fighter.name + ' arcs a glowing slash!');`
+        },
+        lunge: {
+          label: 'Lunge',
+          attackType: 'lunge',
+          attackWindup: 8,
+          attackRange: 30,
+          attackKnockback: 17,
+          attackSpeed: 1.5,
+          projectileSpeed: 11,
+          leapStrength: 18,
+          effectRadius: 14,
+          moveText: 'lunges forward like a spear through the air!',
+          attackCode: `fighter.vx += fighter.facing * 20; fighter.vy -= 2; if (opponent) { opponent.vx += fighter.facing * 15; opponent.vy -= 5; } addCommentary(fighter.name + ' lunges through the lane!');`
+        },
+        spin: {
+          label: 'Spin Kick',
+          attackType: 'spin',
+          attackWindup: 10,
+          attackRange: 26,
+          attackKnockback: 20,
+          attackSpeed: 1.35,
+          projectileSpeed: 10,
+          leapStrength: 9,
+          effectRadius: 21,
+          moveText: 'spins through the lane and kicks out with force!',
+          attackCode: `fighter.vx += fighter.facing * 12; if (opponent) { opponent.vx += fighter.facing * 16; opponent.vy -= 6; } addCommentary(fighter.name + ' spins through the lane!');`
+        },
+        dash: {
+          label: 'Dash Strike',
+          attackType: 'dash',
+          attackWindup: 7,
+          attackRange: 32,
+          attackKnockback: 15,
+          attackSpeed: 1.7,
+          projectileSpeed: 13,
+          leapStrength: 12,
+          effectRadius: 12,
+          moveText: 'dashes in for a heavy follow-up strike!',
+          attackCode: `fighter.vx += fighter.facing * 26; if (opponent) { opponent.vx += fighter.facing * 8; opponent.vy -= 3; } addCommentary(fighter.name + ' dashes through the gap!');`
+        },
+        sweep: {
+          label: 'Sweep',
+          attackType: 'sweep',
+          attackWindup: 12,
+          attackRange: 24,
+          attackKnockback: 19,
+          attackSpeed: 0.95,
+          projectileSpeed: 9,
+          leapStrength: 8,
+          effectRadius: 20,
+          moveText: 'sweeps the ground and trips enemies off-balance!',
+          attackCode: `fighter.vx += fighter.facing * 4; if (opponent) { opponent.vx += fighter.facing * 13; opponent.vy += 2; } addCommentary(fighter.name + ' sweeps the ground!');`
+        },
+        burst: {
+          label: 'Burst Blast',
+          attackType: 'burst',
+          attackWindup: 9,
+          attackRange: 35,
+          attackKnockback: 18,
+          attackSpeed: 1.25,
+          projectileSpeed: 19,
+          leapStrength: 11,
+          effectRadius: 15,
+          moveText: 'bursts forward with a bright energy blast!',
+          attackCode: `fighter.vx += fighter.facing * 18; if (opponent) { opponent.vx += fighter.facing * 14; opponent.vy -= 4; } addCommentary(fighter.name + ' detonates a bright burst!');`
+        },
+        beam: {
+          label: 'Beam',
+          attackType: 'beam',
+          attackWindup: 15,
+          attackRange: 40,
+          attackKnockback: 14,
+          attackSpeed: 0.8,
+          projectileSpeed: 24,
+          leapStrength: 10,
+          effectRadius: 13,
+          moveText: 'fires a searing beam down the lane!',
+          attackCode: `fighter.vx += fighter.facing * 12; if (opponent) { opponent.vx += fighter.facing * 8; opponent.vy -= 5; } addCommentary(fighter.name + ' channels a beam!');`
+        },
+        volley: {
+          label: 'Volley',
+          attackType: 'volley',
+          attackWindup: 12,
+          attackRange: 38,
+          attackKnockback: 13,
+          attackSpeed: 1.1,
+          projectileSpeed: 20,
+          leapStrength: 11,
+          effectRadius: 14,
+          moveText: 'launches a rapid volley of strikes!',
+          attackCode: `fighter.vx += fighter.facing * 15; if (opponent) { opponent.vx += fighter.facing * 9; opponent.vy -= 2; } addCommentary(fighter.name + ' launches a volley!');`
+        },
+        hook: {
+          label: 'Hook',
+          attackType: 'hook',
+          attackWindup: 8,
+          attackRange: 20,
+          attackKnockback: 15,
+          attackSpeed: 1.5,
+          projectileSpeed: 7,
+          leapStrength: 9,
+          effectRadius: 11,
+          moveText: 'hooks in with a nasty counter-punch!',
+          attackCode: `fighter.vx += fighter.facing * 12; if (opponent) { opponent.vx += fighter.facing * 10; opponent.vy -= 1; } addCommentary(fighter.name + ' hooks in for a counter!');`
+        },
+        hammer: {
+          label: 'Hammer',
+          attackType: 'hammer',
+          attackWindup: 14,
+          attackRange: 22,
+          attackKnockback: 26,
+          attackSpeed: 0.7,
+          projectileSpeed: 8,
+          leapStrength: 15,
+          effectRadius: 24,
+          moveText: 'drops a heavy hammer strike onto the target!',
+          attackCode: `fighter.vy += 2; fighter.vx += fighter.facing * 6; if (opponent) { opponent.vx += fighter.facing * 18; opponent.vy -= 8; } addCommentary(fighter.name + ' drops a hammer strike!');`
+        },
+        drill: {
+          label: 'Drill',
+          attackType: 'drill',
+          attackWindup: 10,
+          attackRange: 26,
+          attackKnockback: 20,
+          attackSpeed: 1.45,
+          projectileSpeed: 13,
+          leapStrength: 13,
+          effectRadius: 18,
+          moveText: 'drills through the target with a spinning impact!',
+          attackCode: `fighter.vx += fighter.facing * 18; if (opponent) { opponent.vx += fighter.facing * 15; opponent.vy -= 7; } addCommentary(fighter.name + ' drills through the foe!');`
+        },
+        meteor: {
+          label: 'Meteor',
+          attackType: 'meteor',
+          attackWindup: 16,
+          attackRange: 36,
+          attackKnockback: 28,
+          attackSpeed: 0.75,
+          projectileSpeed: 18,
+          leapStrength: 17,
+          effectRadius: 24,
+          moveText: 'brings down a fiery meteor crash!',
+          attackCode: `fighter.vy -= 4; fighter.vx += fighter.facing * 10; if (opponent) { opponent.vx += fighter.facing * 18; opponent.vy -= 12; } addCommentary(fighter.name + ' calls a meteor down!');`
+        },
+        nova: {
+          label: 'Nova',
+          attackType: 'nova',
+          attackWindup: 18,
+          attackRange: 42,
+          attackKnockback: 22,
+          attackSpeed: 0.65,
+          projectileSpeed: 22,
+          leapStrength: 12,
+          effectRadius: 28,
+          moveText: 'erupts in a radiant nova blast!',
+          attackCode: `fighter.vx += fighter.facing * 4; if (opponent) { opponent.vx += fighter.facing * 16; opponent.vy -= 9; } addCommentary(fighter.name + ' erupts in a nova!');`
+        },
+        whip: {
+          label: 'Whip',
+          attackType: 'whip',
+          attackWindup: 9,
+          attackRange: 34,
+          attackKnockback: 12,
+          attackSpeed: 1.25,
+          projectileSpeed: 16,
+          leapStrength: 10,
+          effectRadius: 15,
+          moveText: 'snaps a whipping arc across the field!',
+          attackCode: `fighter.vx += fighter.facing * 20; if (opponent) { opponent.vx += fighter.facing * 12; opponent.vy -= 3; } addCommentary(fighter.name + ' whips across the field!');`
+        },
+        stomp: {
+          label: 'Stomp',
+          attackType: 'stomp',
+          attackWindup: 14,
+          attackRange: 20,
+          attackKnockback: 24,
+          attackSpeed: 0.8,
+          projectileSpeed: 7,
+          leapStrength: 20,
+          effectRadius: 26,
+          moveText: 'drops a brutal ground stomp!',
+          attackCode: `fighter.vy -= 3; if (opponent) { opponent.vx += fighter.facing * 18; opponent.vy += 6; } addCommentary(fighter.name + ' stomps the arena!');`
+        },
+        orb: {
+          label: 'Orb',
+          attackType: 'orb',
+          attackWindup: 10,
+          attackRange: 31,
+          attackKnockback: 16,
+          attackSpeed: 1.1,
+          projectileSpeed: 20,
+          leapStrength: 12,
+          effectRadius: 18,
+          moveText: 'launches a glowing orb of force!',
+          attackCode: `fighter.vx += fighter.facing * 16; if (opponent) { opponent.vx += fighter.facing * 11; opponent.vy -= 3; } addCommentary(fighter.name + ' launches a glowing orb!');`
+        },
+        snare: {
+          label: 'Snare',
+          attackType: 'snare',
+          attackWindup: 11,
+          attackRange: 28,
+          attackKnockback: 13,
+          attackSpeed: 1.0,
+          projectileSpeed: 15,
+          leapStrength: 9,
+          effectRadius: 17,
+          moveText: 'fires a snare trap that catches the target!',
+          attackCode: `fighter.vx += fighter.facing * 12; if (opponent) { opponent.vx += fighter.facing * 7; opponent.vy -= 1; } addCommentary(fighter.name + ' plants a snare!');`
+        },
+        tornado: {
+          label: 'Tornado',
+          attackType: 'tornado',
+          attackWindup: 13,
+          attackRange: 30,
+          attackKnockback: 19,
+          attackSpeed: 1.0,
+          projectileSpeed: 15,
+          leapStrength: 13,
+          effectRadius: 23,
+          moveText: 'spins up a destructive tornado of force!',
+          attackCode: `fighter.vx += fighter.facing * 14; if (opponent) { opponent.vx += fighter.facing * 11; opponent.vy -= 8; } addCommentary(fighter.name + ' spins a tornado!');`
+        },
+        cross: {
+          label: 'Cross Strike',
+          attackType: 'cross',
+          attackWindup: 10,
+          attackRange: 22,
+          attackKnockback: 17,
+          attackSpeed: 1.3,
+          projectileSpeed: 11,
+          leapStrength: 11,
+          effectRadius: 13,
+          moveText: 'fires a clean cross strike with perfect timing!',
+          attackCode: `fighter.vx += fighter.facing * 11; if (opponent) { opponent.vx += fighter.facing * 14; opponent.vy -= 4; } addCommentary(fighter.name + ' hits a cross strike!');`
+        },
+        airslash: {
+          label: 'Aerial Slash',
+          attackType: 'airslash',
+          attackWindup: 8,
+          attackRange: 30,
+          attackKnockback: 18,
+          attackSpeed: 1.5,
+          projectileSpeed: 12,
+          leapStrength: 17,
+          effectRadius: 18,
+          moveText: 'slashes through the air with an aerial finisher!',
+          attackCode: `fighter.vy -= 6; fighter.vx += fighter.facing * 18; if (opponent) { opponent.vx += fighter.facing * 12; opponent.vy -= 8; } addCommentary(fighter.name + ' aerial-slashes through the sky!');`
+        },
+        shieldbash: {
+          label: 'Shield Bash',
+          attackType: 'shieldbash',
+          attackWindup: 12,
+          attackRange: 24,
+          attackKnockback: 23,
+          attackSpeed: 0.9,
+          projectileSpeed: 7,
+          leapStrength: 10,
+          effectRadius: 20,
+          moveText: 'charges a heavy shield bash and knocks them back!',
+          attackCode: `fighter.vx += fighter.facing * 9; if (opponent) { opponent.vx += fighter.facing * 17; opponent.vy -= 2; } addCommentary(fighter.name + ' launches a shield bash!');`
+        },
+        divine: {
+          label: 'Divine Wave',
+          attackType: 'divine',
+          attackWindup: 15,
+          attackRange: 40,
+          attackKnockback: 17,
+          attackSpeed: 0.8,
+          projectileSpeed: 21,
+          leapStrength: 12,
+          effectRadius: 25,
+          moveText: 'releases a radiant divine wave!',
+          attackCode: `fighter.vx += fighter.facing * 10; if (opponent) { opponent.vx += fighter.facing * 11; opponent.vy -= 7; } addCommentary(fighter.name + ' releases a divine wave!');`
+        },
+        shadow: {
+          label: 'Shadow Cut',
+          attackType: 'shadow',
+          attackWindup: 7,
+          attackRange: 27,
+          attackKnockback: 19,
+          attackSpeed: 1.7,
+          projectileSpeed: 17,
+          leapStrength: 14,
+          effectRadius: 15,
+          moveText: 'cuts through the darkness with a shadow strike!',
+          attackCode: `fighter.vx += fighter.facing * 18; if (opponent) { opponent.vx += fighter.facing * 13; opponent.vy -= 6; } addCommentary(fighter.name + ' cuts a shadow arc!');`
+        }
       };
 
       const specialPresets = {
-        custom: { label: 'Custom special', specialPower: 18, specialCooldown: 45, attackMultiplier: 1.5, projectileSpeed: 14, effectRadius: 18 },
-        burst: { label: 'Burst', specialPower: 24, specialCooldown: 38, attackMultiplier: 1.7, projectileSpeed: 18, effectRadius: 20 },
-        beam: { label: 'Beam', specialPower: 27, specialCooldown: 50, attackMultiplier: 1.8, projectileSpeed: 22, effectRadius: 18 },
-        nova: { label: 'Nova', specialPower: 31, specialCooldown: 62, attackMultiplier: 2.0, projectileSpeed: 24, effectRadius: 24 },
-        dash: { label: 'Dash', specialPower: 22, specialCooldown: 35, attackMultiplier: 1.6, projectileSpeed: 19, effectRadius: 16 },
-        snare: { label: 'Snare', specialPower: 19, specialCooldown: 48, attackMultiplier: 1.45, projectileSpeed: 16, effectRadius: 17 },
-        orbital: { label: 'Orbital', specialPower: 26, specialCooldown: 58, attackMultiplier: 1.9, projectileSpeed: 23, effectRadius: 21 }
+        custom: { label:'Custom special', power:18, cooldown:45, speed:14, radius:18, direction:'forward', code:`fighter.vx += fighter.facing * 16; if (opponent) { opponent.vx += fighter.facing * 10; opponent.vy -= 3; } addCommentary(fighter.name + ' unleashes a custom special!');` },
+        burst: { label:'Burst', power:24, cooldown:38, speed:18, radius:20, direction:'forward', code:`fighter.vx += fighter.facing * 18; if (opponent) { opponent.vx += fighter.facing * 13; opponent.vy -= 4; } addCommentary(fighter.name + ' erupts in a burst!');` },
+        beam: { label:'Beam', power:27, cooldown:50, speed:22, radius:18, direction:'forward', code:`fighter.vx += fighter.facing * 12; if (opponent) { opponent.vx += fighter.facing * 8; opponent.vy -= 5; } addCommentary(fighter.name + ' charges a beam!');` },
+        nova: { label:'Nova', power:31, cooldown:62, speed:24, radius:24, direction:'forward', code:`fighter.vx += fighter.facing * 8; if (opponent) { opponent.vx += fighter.facing * 16; opponent.vy -= 8; } addCommentary(fighter.name + ' detonates a nova!');` },
+        dash: { label:'Dash', power:22, cooldown:35, speed:19, radius:16, direction:'forward', code:`fighter.vx += fighter.facing * 24; if (opponent) { opponent.vx += fighter.facing * 12; opponent.vy -= 2; } addCommentary(fighter.name + ' rockets forward!');` },
+        snare: { label:'Snare', power:19, cooldown:48, speed:16, radius:17, direction:'forward', code:`fighter.vx += fighter.facing * 10; if (opponent) { opponent.vx += fighter.facing * 8; opponent.vy -= 1; } addCommentary(fighter.name + ' traps the target!');` },
+        orbital: { label:'Orbital', power:26, cooldown:58, speed:23, radius:21, direction:'forward', code:`fighter.vx += fighter.facing * 14; if (opponent) { opponent.vx += fighter.facing * 15; opponent.vy -= 7; } addCommentary(fighter.name + ' calls a hovering orb!');` },
+        upspec: { label:'Up Special', power:23, cooldown:40, speed:18, radius:18, direction:'up', code:`fighter.vy -= 11; fighter.vx += fighter.facing * 6; if (opponent) { opponent.vy -= 9; opponent.vx += fighter.facing * 9; } addCommentary(fighter.name + ' blasts upward!');` },
+        downspec: { label:'Down Special', power:25, cooldown:42, speed:16, radius:20, direction:'down', code:`fighter.vy += 7; if (opponent) { opponent.vy += 6; opponent.vx += fighter.facing * 10; } addCommentary(fighter.name + ' crashes downward!');` },
+        leftspec: { label:'Left Special', power:21, cooldown:39, speed:17, radius:18, direction:'left', code:`fighter.x -= 18; if (opponent) { opponent.x -= 12; opponent.vx -= 3; } addCommentary(fighter.name + ' sweeps leftward!');` },
+        rightspec: { label:'Right Special', power:21, cooldown:39, speed:17, radius:18, direction:'right', code:`fighter.x += 18; if (opponent) { opponent.x += 12; opponent.vx += 3; } addCommentary(fighter.name + ' sweeps rightward!');` }
       };
 
       const fsPresets = {
-        custom: { label: 'Custom FS', specialPower: 20, specialCooldown: 70, attackMultiplier: 1.8, attackRange: 36, effectRadius: 22 },
-        meteor: { label: 'Meteor', specialPower: 28, specialCooldown: 80, attackMultiplier: 2.1, attackRange: 38, effectRadius: 24 },
-        divine: { label: 'Divine Burst', specialPower: 30, specialCooldown: 84, attackMultiplier: 2.3, attackRange: 42, effectRadius: 26 },
-        tornado: { label: 'Tornado', specialPower: 26, specialCooldown: 76, attackMultiplier: 2.0, attackRange: 34, effectRadius: 25 },
-        nova: { label: 'Nova Break', specialPower: 32, specialCooldown: 90, attackMultiplier: 2.4, attackRange: 44, effectRadius: 28 },
-        shadow: { label: 'Shadow Finish', specialPower: 27, specialCooldown: 74, attackMultiplier: 2.1, attackRange: 35, effectRadius: 20 },
-        storm: { label: 'Storm Rush', specialPower: 29, specialCooldown: 78, attackMultiplier: 2.2, attackRange: 40, effectRadius: 23 }
+        custom: { label:'Custom FS', power:22, cooldown:80, speed:20, radius:22, direction:'forward', code:`fighter.vx += fighter.facing * 16; if (opponent) { opponent.vx += fighter.facing * 18; opponent.vy -= 12; } addCommentary(fighter.name + ' unleashes a custom final smash!');` },
+        meteor: { label:'Meteor', power:28, cooldown:84, speed:20, radius:24, direction:'forward', code:`fighter.vy -= 10; if (opponent) { opponent.vx += fighter.facing * 18; opponent.vy -= 14; } addCommentary(fighter.name + ' drops a meteor finale!');` },
+        divine: { label:'Divine Burst', power:30, cooldown:88, speed:22, radius:26, direction:'forward', code:`fighter.vx += fighter.facing * 12; if (opponent) { opponent.vx += fighter.facing * 20; opponent.vy -= 14; } addCommentary(fighter.name + ' releases a divine burst!');` },
+        tornado: { label:'Tornado', power:26, cooldown:76, speed:18, radius:25, direction:'forward', code:`fighter.vx += fighter.facing * 10; if (opponent) { opponent.vx += fighter.facing * 17; opponent.vy -= 10; } addCommentary(fighter.name + ' spins up a tornado finale!');` },
+        nova: { label:'Nova Break', power:32, cooldown:90, speed:24, radius:28, direction:'forward', code:`fighter.vx += fighter.facing * 8; if (opponent) { opponent.vx += fighter.facing * 20; opponent.vy -= 16; } addCommentary(fighter.name + ' breaks the arena with a nova!');` },
+        shadow: { label:'Shadow Finish', power:27, cooldown:74, speed:18, radius:20, direction:'forward', code:`fighter.vx += fighter.facing * 20; if (opponent) { opponent.vx += fighter.facing * 18; opponent.vy -= 12; } addCommentary(fighter.name + ' shadows the foe into oblivion!');` },
+        storm: { label:'Storm Rush', power:29, cooldown:78, speed:21, radius:23, direction:'forward', code:`fighter.vx += fighter.facing * 18; if (opponent) { opponent.vx += fighter.facing * 19; opponent.vy -= 11; } addCommentary(fighter.name + ' tears through the storm!');` },
+        upsmash: { label:'Up Smash', power:24, cooldown:82, speed:19, radius:22, direction:'up', code:`fighter.vy -= 14; if (opponent) { opponent.vy -= 16; opponent.vx += fighter.facing * 14; } addCommentary(fighter.name + ' launches a heaven-splitting uppercut!');` },
+        downsmash: { label:'Down Smash', power:26, cooldown:80, speed:18, radius:24, direction:'down', code:`fighter.vy += 12; if (opponent) { opponent.vy += 10; opponent.vx += fighter.facing * 15; } addCommentary(fighter.name + ' slams the ground into a crater!');` },
+        leftsmash: { label:'Left Smash', power:25, cooldown:81, speed:18, radius:22, direction:'left', code:`fighter.x -= 24; if (opponent) { opponent.x -= 18; opponent.vx -= 6; } addCommentary(fighter.name + ' drags the arena left!');` },
+        rightsmash: { label:'Right Smash', power:25, cooldown:81, speed:18, radius:22, direction:'right', code:`fighter.x += 24; if (opponent) { opponent.x += 18; opponent.vx += 6; } addCommentary(fighter.name + ' drags the arena right!');` }
       };
 
       function setFieldValue(id, value) {
@@ -568,11 +806,14 @@
         return el.value !== '' ? el.value : fallback;
       }
 
+      function escapeString(value) {
+        return String(value ?? '').replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+      }
+
       function applyFighterPreset(name) {
         const preset = fighterPresets[name];
         if (!preset) return;
-
-        Object.entries({
+        const map = {
           key: 'key', name: 'name', color: 'color', mySrc: 'mySrc', spriteKey: 'spriteKey', description: 'description',
           speed: 'speed', jumpMultiplier: 'jumpMultiplier', canGlide: 'canGlide', glideGravityMultiplier: 'glideGravityMultiplier',
           glideFallSpeed: 'glideFallSpeed', sizeMultiplier: 'sizeMultiplier', attackMultiplier: 'attackMultiplier',
@@ -580,18 +821,17 @@
           specialCooldown: 'specialCooldown', attackWindup: 'attackWindup', attackRange: 'attackRange', attackKnockback: 'attackKnockback',
           attackSpeed: 'attackSpeed', projectileSpeed: 'projectileSpeed', leapStrength: 'leapStrength', effectRadius: 'effectRadius',
           leftKey: 'leftKey', rightKey: 'rightKey', jumpKey: 'jumpKey', attackKey: 'attackKey', finalKey: 'finalKey', specialKey: 'specialKey'
-        }).forEach(([fieldId, presetKey]) => {
+        };
+        Object.entries(map).forEach(([fieldId, presetKey]) => {
           setFieldValue(fieldId, preset[presetKey]);
         });
-
         updateOutput();
       }
 
       function applyAttackPreset(name) {
         const preset = attackPresets[name];
         if (!preset) return;
-
-        Object.entries({
+        const map = {
           attackWindup: 'attackWindup',
           attackRange: 'attackRange',
           attackKnockback: 'attackKnockback',
@@ -599,66 +839,97 @@
           projectileSpeed: 'projectileSpeed',
           leapStrength: 'leapStrength',
           effectRadius: 'effectRadius'
-        }).forEach(([fieldId, presetKey]) => {
-          setFieldValue(fieldId, preset[presetKey]);
-        });
-
-        setFieldValue('attackType', preset.attackType || name);
+        };
+        Object.entries(map).forEach(([fieldId, presetKey]) => setFieldValue(fieldId, preset[presetKey]));
         updateOutput();
       }
 
       function applySpecialPreset(name) {
         const preset = specialPresets[name];
         if (!preset) return;
-
-        Object.entries({
-          specialPower: 'specialPower',
-          specialCooldown: 'specialCooldown',
-          attackMultiplier: 'attackMultiplier',
-          projectileSpeed: 'projectileSpeed',
-          effectRadius: 'effectRadius'
-        }).forEach(([fieldId, presetKey]) => {
-          setFieldValue(fieldId, preset[presetKey]);
-        });
-
+        const map = {
+          specialPower: 'power',
+          specialCooldown: 'cooldown',
+          projectileSpeed: 'speed',
+          effectRadius: 'radius'
+        };
+        Object.entries(map).forEach(([fieldId, presetKey]) => setFieldValue(fieldId, preset[presetKey]));
         updateOutput();
       }
 
       function applyFSPreset(name) {
         const preset = fsPresets[name];
         if (!preset) return;
-
-        Object.entries({
-          specialPower: 'specialPower',
-          specialCooldown: 'specialCooldown',
-          attackMultiplier: 'attackMultiplier',
-          attackRange: 'attackRange',
-          effectRadius: 'effectRadius'
-        }).forEach(([fieldId, presetKey]) => {
-          setFieldValue(fieldId, preset[presetKey]);
-        });
-
+        const map = {
+          specialPower: 'power',
+          specialCooldown: 'cooldown',
+          projectileSpeed: 'speed',
+          effectRadius: 'radius'
+        };
+        Object.entries(map).forEach(([fieldId, presetKey]) => setFieldValue(fieldId, preset[presetKey]));
         updateOutput();
       }
 
-      function escapeString(value) {
-        return String(value).replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+      function buildAttackFunction(selectedPreset) {
+        const attack = attackPresets[selectedPreset] || attackPresets.custom;
+        return `
+  attack(fighter, opponent) {
+    if (fighter.stocks <= 0 || fighter.attackCooldown > 0 || fighter.stunned > 0) return;
+    fighter.attackCooldown = ${Number(getValue('attackWindup', attack.attackWindup)) + 8};
+    fighter.punchFrame = 0;
+    fighter.punchAnimating = true;
+    ${attack.attackCode}
+  },`;
+      }
+
+      function buildSpecialFunction(selectedPreset) {
+        const preset = specialPresets[selectedPreset] || specialPresets.custom;
+        return `
+  special(fighter, opponent) {
+    if (fighter.specialCooldown > 0 || fighter.stunned > 0) return;
+    fighter.specialCooldown = ${Number(getValue('specialCooldown', preset.cooldown))};
+    fighter.vx += fighter.facing * ${Number(getValue('projectileSpeed', preset.speed)) * 0.65};
+    ${preset.code}
+  },`;
+      }
+
+      function buildFinalFunction(selectedPreset) {
+        const preset = fsPresets[selectedPreset] || fsPresets.custom;
+        return `
+  final(fighter, opponent) {
+    if (fighter.finalCooldown > 0 || fighter.stunned > 0) return;
+    fighter.finalCooldown = ${Number(getValue('specialCooldown', preset.cooldown))};
+    ${preset.code}
+  },`;
+      }
+
+      function buildImageCreator() {
+        const mySrc = getValue('mySrc', '');
+        const spriteKey = getValue('spriteKey', '');
+        const key = getValue('key', 'custom-fighter');
+        return `
+  mySrc: ${mySrc ? `'${escapeString(mySrc)}'` : 'undefined'},
+  spriteKey: ${spriteKey ? `'${escapeString(spriteKey)}'` : 'undefined'},
+  imageCreator() {
+    const art = { key: '${escapeString(key)}', spriteKey: ${spriteKey ? `'${escapeString(spriteKey)}'` : 'undefined'}, mySrc: ${mySrc ? `'${escapeString(mySrc)}'` : 'undefined'} };
+    return art.mySrc || art.spriteKey || 'generated-sprite';
+  },`;
       }
 
       function buildModText() {
         const key = (getValue('key', 'custom-fighter') || 'custom-fighter').trim() || 'custom-fighter';
         const name = (getValue('name', 'Custom Fighter') || 'Custom Fighter').trim() || 'Custom Fighter';
         const color = getValue('color', '#38bdf8');
+        const description = (getValue('description', 'A flexible arena fighter.') || 'A flexible arena fighter.').trim();
         const mySrc = getValue('mySrc', '');
         const spriteKey = getValue('spriteKey', '');
-        const description = getValue('description', 'A flexible arena fighter.');
         const speed = Number(getValue('speed', 1.3));
         const jumpMultiplier = Number(getValue('jumpMultiplier', 1.2));
+        const attackMultiplier = Number(getValue('attackMultiplier', 1.5));
         const canGlide = Boolean(getValue('canGlide', true));
         const glideGravityMultiplier = Number(getValue('glideGravityMultiplier', 0.08));
         const glideFallSpeed = Number(getValue('glideFallSpeed', 2.3));
         const sizeMultiplier = Number(getValue('sizeMultiplier', 1));
-        const attackMultiplier = Number(getValue('attackMultiplier', 1.5));
         const fallDamageMultiplier = Number(getValue('fallDamageMultiplier', 1));
         const passiveFallDamage = Boolean(getValue('passiveFallDamage', false));
         const specialPower = Number(getValue('specialPower', 18));
@@ -679,15 +950,22 @@
           special: escapeString(getValue('specialKey', 's'))
         };
 
-        const mySrcLine = mySrc ? `  mySrc: '${escapeString(mySrc)}',` : '';
-        const spriteLine = spriteKey ? `  spriteKey: '${escapeString(spriteKey)}',` : '';
-        const descriptionText = `  description: '${escapeString(description)}',`;
+        const selectedAttack = document.getElementById('attackPresetSelect').value || 'custom';
+        const selectedSpecial = document.getElementById('specialPresetSelect').value || 'custom';
+        const selectedFS = document.getElementById('fsPresetSelect').value || 'custom';
+
+        const attackFn = buildAttackFunction(selectedAttack);
+        const specialFn = buildSpecialFunction(selectedSpecial);
+        const finalFn = buildFinalFunction(selectedFS);
+        const imageCreator = buildImageCreator();
 
         return `Mods.registerCharacter({
   key: '${escapeString(key)}',
   name: '${escapeString(name)}',
   color: '${escapeString(color)}',
-${mySrcLine}${spriteLine}${descriptionText}
+  description: '${escapeString(description)}',
+  mySrc: ${mySrc ? `'${escapeString(mySrc)}'` : 'undefined'},
+  spriteKey: ${spriteKey ? `'${escapeString(spriteKey)}'` : 'undefined'},
   speed: ${speed},
   jumpMultiplier: ${jumpMultiplier},
   canGlide: ${canGlide},
@@ -714,24 +992,12 @@ ${mySrcLine}${spriteLine}${descriptionText}
     final: '${keys.final}',
     special: '${keys.special}'
   },
-
-  attack(fighter, opponent) {
-    if (fighter.stocks <= 0 || fighter.attackCooldown > 0 || fighter.stunned > 0) return;
-    fighter.attackCooldown = Math.max(12, Math.round(${attackWindup} + 8));
-    fighter.punchFrame = 0;
-    fighter.punchAnimating = true;
-    fighter.vx += fighter.facing * ${attackRange};
-    if (opponent) opponent.vx += fighter.facing * ${attackKnockback};
-    addCommentary(fighter.name + ' hits with a custom finisher!');
+  imageCreator() {
+    return (this.mySrc || this.spriteKey || 'generated-sprite');
   },
-
-  special(fighter, opponent) {
-    if (fighter.specialCooldown > 0 || fighter.stunned > 0) return;
-    fighter.vx += fighter.facing * ${specialPower};
-    fighter.specialCooldown = ${specialCooldown};
-    if (opponent) opponent.vx += fighter.facing * ${attackKnockback};
-    addCommentary(fighter.name + ' unleashes a signature special!');
-  }
+  ${attackFn}
+  ${specialFn}
+  ${finalFn}
 });`;
       }
 
@@ -743,10 +1009,10 @@ ${mySrcLine}${spriteLine}${descriptionText}
         const output = document.getElementById('output');
         output.select();
         navigator.clipboard.writeText(output.value).then(() => {
-          const button = document.getElementById('copyBtn');
-          const original = button.textContent;
-          button.textContent = 'Copied!';
-          setTimeout(() => { button.textContent = original; }, 1000);
+          const btn = document.getElementById('copyBtn');
+          const original = btn.textContent;
+          btn.textContent = 'Copied!';
+          setTimeout(() => { btn.textContent = original; }, 1000);
         }).catch(() => {
           alert('Unable to copy automatically. Select the text manually.');
         });
@@ -767,10 +1033,13 @@ ${mySrcLine}${spriteLine}${descriptionText}
       function randomizeForm() {
         const fighterNames = Object.keys(fighterPresets).filter((name) => name !== 'custom');
         const attackNames = Object.keys(attackPresets).filter((name) => name !== 'custom');
+        const specialNames = Object.keys(specialPresets).filter((name) => name !== 'custom');
+        const fsNames = Object.keys(fsPresets).filter((name) => name !== 'custom');
+
         const randomFighter = fighterNames[Math.floor(Math.random() * fighterNames.length)];
         const randomAttack = attackNames[Math.floor(Math.random() * attackNames.length)];
-        const randomSpecial = Object.keys(specialPresets).filter((name) => name !== 'custom')[Math.floor(Math.random() * Object.keys(specialPresets).length)];
-        const randomFS = Object.keys(fsPresets).filter((name) => name !== 'custom')[Math.floor(Math.random() * Object.keys(fsPresets).length)];
+        const randomSpecial = specialNames[Math.floor(Math.random() * specialNames.length)];
+        const randomFS = fsNames[Math.floor(Math.random() * fsNames.length)];
 
         document.getElementById('fighterPresetSelect').value = randomFighter;
         document.getElementById('attackPresetSelect').value = randomAttack;
