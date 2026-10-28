@@ -164,6 +164,29 @@
         color: #bbf7d0;
       }
 
+      .direction-grid {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(60px, 1fr));
+        gap: 8px;
+        margin-bottom: 12px;
+      }
+
+      .direction-button {
+        background: var(--panel-2);
+        color: var(--text);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 8px 6px;
+        font-size: 0.78rem;
+        font-weight: 700;
+      }
+
+      .direction-button.active {
+        background: linear-gradient(135deg, rgba(56, 189, 248, 0.18), rgba(37, 99, 235, 0.26));
+        border-color: rgba(56, 189, 248, 0.7);
+        box-shadow: inset 0 0 0 1px rgba(56, 189, 248, 0.4);
+      }
+
       .preview-header {
         display: flex;
         justify-content: space-between;
@@ -315,8 +338,24 @@
 
           <div class="section">
             <div class="section-header"><div class="section-title">Special editor</div></div>
-            <div class="form-grid">
-              <div class="field full"><label for="specialName">Special name</label><input id="specialName" value="Burst Cannon" /></div>
+
+            <div class="field full">
+              <label for="specialName">Special name</label>
+              <input id="specialName" value="Burst Cannon" />
+            </div>
+
+            <div class="field full" style="margin-top: 10px;">
+              <label>Direction</label>
+              <div class="direction-grid">
+                <button type="button" class="direction-button active" data-direction="forward">Forward</button>
+                <button type="button" class="direction-button" data-direction="up">Up</button>
+                <button type="button" class="direction-button" data-direction="left">Left</button>
+                <button type="button" class="direction-button" data-direction="down">Down</button>
+                <button type="button" class="direction-button" data-direction="right">Right</button>
+              </div>
+            </div>
+
+            <div class="form-grid" style="margin-top: 10px;">
               <div class="field">
                 <label for="specialType">Type</label>
                 <select id="specialType">
@@ -333,7 +372,7 @@
                 </select>
               </div>
               <div class="field">
-                <label for="specialDirection">Direction</label>
+                <label for="specialDirection">Direction key</label>
                 <select id="specialDirection">
                   <option value="forward">Forward</option>
                   <option value="up">Up</option>
@@ -342,10 +381,21 @@
                   <option value="right">Right</option>
                 </select>
               </div>
+
               <div class="field"><label for="specialPowerEditor">Power</label><input id="specialPowerEditor" type="number" step="1" value="24" /></div>
               <div class="field"><label for="specialCooldownEditor">Cooldown</label><input id="specialCooldownEditor" type="number" step="1" value="38" /></div>
               <div class="field"><label for="specialSpeedEditor">Speed</label><input id="specialSpeedEditor" type="number" step="1" value="18" /></div>
               <div class="field"><label for="specialRadiusEditor">Radius</label><input id="specialRadiusEditor" type="number" step="1" value="20" /></div>
+              <div class="field"><label for="specialLaunchForce">Launch force</label><input id="specialLaunchForce" type="number" step="1" value="16" /></div>
+              <div class="field"><label for="specialDuration">Duration</label><input id="specialDuration" type="number" step="1" value="26" /></div>
+              <div class="field"><label for="specialKnockback">Knockback</label><input id="specialKnockback" type="number" step="1" value="18" /></div>
+              <div class="field"><label for="specialGravity">Gravity</label><input id="specialGravity" type="number" step="0.1" value="0.5" /></div>
+              <div class="field"><label for="specialSelfPush">Self push</label><input id="specialSelfPush" type="number" step="0.1" value="2.5" /></div>
+              <div class="field"><label for="specialHitStun">Hit stun</label><input id="specialHitStun" type="number" step="1" value="14" /></div>
+              <div class="field"><label for="specialPierce">Pierce</label><input id="specialPierce" type="number" step="1" value="1" /></div>
+              <div class="field"><label for="specialTrail">Trail</label><input id="specialTrail" type="number" step="1" value="8" /></div>
+              <div class="field"><label for="specialChargeTime">Charge time</label><input id="specialChargeTime" type="number" step="1" value="4" /></div>
+              <div class="field"><label for="specialRecoil">Recoil</label><input id="specialRecoil" type="number" step="1" value="6" /></div>
               <div class="field full"><label for="specialText">Special text</label><input id="specialText" value="fires a bright burst that tears through the lane!" /></div>
             </div>
           </div>
@@ -433,58 +483,58 @@
     <script>
       const fighterPresets = {
         custom: { key: 'custom-fighter', name: 'Custom Fighter', color: '#38bdf8', mySrc: '', spriteKey: '', description: 'A flexible arena fighter.', speed: 1.3, jumpMultiplier: 1.2, canGlide: true, glideGravityMultiplier: 0.08, glideFallSpeed: 2.3, sizeMultiplier: 1.0, attackMultiplier: 1.5, fallDamageMultiplier: 1.0, passiveFallDamage: false, specialPower: 18, specialCooldown: 45, attackWindup: 10, attackRange: 26, attackKnockback: 15, attackSpeed: 1.2, projectileSpeed: 14, leapStrength: 12, effectRadius: 18, leftKey: 'a', rightKey: 'd', jumpKey: 'w', attackKey: 'f', finalKey: 'g', specialKey: 's' },
-        brawler: { key: 'brawler', name: 'Brawler', color: '#f97316', mySrc: '', spriteKey: '', description: 'A bruiser that wins by pressure.', speed: 1.0, jumpMultiplier: 1.0, canGlide: false, glideGravityMultiplier: 0.11, glideFallSpeed: 2.0, sizeMultiplier: 1.15, attackMultiplier: 1.4, fallDamageMultiplier: 1.1, passiveFallDamage: true, specialPower: 20, specialCooldown: 42, attackWindup: 12, attackRange: 22, attackKnockback: 18, attackSpeed: 0.95, projectileSpeed: 12, leapStrength: 14, effectRadius: 20, leftKey: 'a', rightKey: 'd', jumpKey: 'w', attackKey: 'f', finalKey: 'g', specialKey: 's' },
-        speedster: { key: 'speedster', name: 'Speedster', color: '#22c55e', mySrc: '', spriteKey: '', description: 'A skirmisher that overwhelms with movement.', speed: 1.7, jumpMultiplier: 1.25, canGlide: true, glideGravityMultiplier: 0.07, glideFallSpeed: 2.5, sizeMultiplier: 0.95, attackMultiplier: 1.25, fallDamageMultiplier: 0.9, passiveFallDamage: false, specialPower: 16, specialCooldown: 38, attackWindup: 8, attackRange: 24, attackKnockback: 12, attackSpeed: 1.6, projectileSpeed: 18, leapStrength: 11, effectRadius: 16, leftKey: 'a', rightKey: 'd', jumpKey: 'w', attackKey: 'f', finalKey: 'g', specialKey: 's' },
-        glass: { key: 'glass-cannon', name: 'Glass Cannon', color: '#f43f5e', mySrc: '', spriteKey: '', description: 'A fragile monster with massive burst damage.', speed: 1.2, jumpMultiplier: 1.15, canGlide: true, glideGravityMultiplier: 0.09, glideFallSpeed: 2.4, sizeMultiplier: 0.9, attackMultiplier: 1.7, fallDamageMultiplier: 1.4, passiveFallDamage: false, specialPower: 24, specialCooldown: 46, attackWindup: 9, attackRange: 28, attackKnockback: 18, attackSpeed: 1.3, projectileSpeed: 16, leapStrength: 13, effectRadius: 22, leftKey: 'a', rightKey: 'd', jumpKey: 'w', attackKey: 'f', finalKey: 'g', specialKey: 's' },
-        tank: { key: 'tank', name: 'Tank', color: '#64748b', mySrc: '', spriteKey: '', description: 'A resilient defender who absorbs pressure.', speed: 0.85, jumpMultiplier: 0.9, canGlide: true, glideGravityMultiplier: 0.1, glideFallSpeed: 2.0, sizeMultiplier: 1.3, attackMultiplier: 1.3, fallDamageMultiplier: 1.2, passiveFallDamage: true, specialPower: 19, specialCooldown: 52, attackWindup: 13, attackRange: 20, attackKnockback: 22, attackSpeed: 0.85, projectileSpeed: 10, leapStrength: 9, effectRadius: 24, leftKey: 'a', rightKey: 'd', jumpKey: 'w', attackKey: 'f', finalKey: 'g', specialKey: 's' },
-        ranger: { key: 'ranger', name: 'Ranger', color: '#0ea5e9', mySrc: '', spriteKey: '', description: 'A precision fighter controlling space.', speed: 1.2, jumpMultiplier: 1.1, canGlide: true, glideGravityMultiplier: 0.08, glideFallSpeed: 2.2, sizeMultiplier: 1.0, attackMultiplier: 1.35, fallDamageMultiplier: 1.0, passiveFallDamage: false, specialPower: 21, specialCooldown: 44, attackWindup: 10, attackRange: 30, attackKnockback: 14, attackSpeed: 1.2, projectileSpeed: 19, leapStrength: 12, effectRadius: 20, leftKey: 'a', rightKey: 'd', jumpKey: 'w', attackKey: 'f', finalKey: 'g', specialKey: 's' },
-        acrobat: { key: 'acrobat', name: 'Acrobat', color: '#a78bfa', mySrc: '', spriteKey: '', description: 'A nimble aerial specialist.', speed: 1.45, jumpMultiplier: 1.45, canGlide: true, glideGravityMultiplier: 0.06, glideFallSpeed: 2.7, sizeMultiplier: 0.95, attackMultiplier: 1.35, fallDamageMultiplier: 0.8, passiveFallDamage: false, specialPower: 17, specialCooldown: 40, attackWindup: 8, attackRange: 26, attackKnockback: 13, attackSpeed: 1.5, projectileSpeed: 15, leapStrength: 17, effectRadius: 18, leftKey: 'a', rightKey: 'd', jumpKey: 'w', attackKey: 'f', finalKey: 'g', specialKey: 's' },
-        mage: { key: 'mage', name: 'Mage', color: '#8b5cf6', mySrc: '', spriteKey: '', description: 'A caster focused on spell bursts.', speed: 1.12, jumpMultiplier: 1.16, canGlide: true, glideGravityMultiplier: 0.07, glideFallSpeed: 2.3, sizeMultiplier: 1.0, attackMultiplier: 1.55, fallDamageMultiplier: 1.0, passiveFallDamage: false, specialPower: 22, specialCooldown: 47, attackWindup: 11, attackRange: 32, attackKnockback: 16, attackSpeed: 1.0, projectileSpeed: 20, leapStrength: 11, effectRadius: 19, leftKey: 'a', rightKey: 'd', jumpKey: 'w', attackKey: 'f', finalKey: 'g', specialKey: 's' },
-        support: { key: 'support', name: 'Support', color: '#2dd4bf', mySrc: '', spriteKey: '', description: 'A utility fighter controlling tempo and space.', speed: 1.08, jumpMultiplier: 1.1, canGlide: true, glideGravityMultiplier: 0.09, glideFallSpeed: 2.2, sizeMultiplier: 1.05, attackMultiplier: 1.2, fallDamageMultiplier: 0.95, passiveFallDamage: false, specialPower: 18, specialCooldown: 43, attackWindup: 10, attackRange: 24, attackKnockback: 12, attackSpeed: 1.15, projectileSpeed: 14, leapStrength: 10, effectRadius: 18, leftKey: 'a', rightKey: 'd', jumpKey: 'w', attackKey: 'f', finalKey: 'g', specialKey: 's' },
-        shadow: { key: 'shadow-assassin', name: 'Shadow Assassin', color: '#111827', mySrc: '', spriteKey: '', description: 'A stealthy assassin built for fast, lethal bursts.', speed: 1.6, jumpMultiplier: 1.35, canGlide: true, glideGravityMultiplier: 0.06, glideFallSpeed: 2.8, sizeMultiplier: 0.92, attackMultiplier: 1.8, fallDamageMultiplier: 0.85, passiveFallDamage: false, specialPower: 21, specialCooldown: 41, attackWindup: 7, attackRange: 27, attackKnockback: 18, attackSpeed: 1.7, projectileSpeed: 17, leapStrength: 15, effectRadius: 17, leftKey: 'a', rightKey: 'd', jumpKey: 'w', attackKey: 'f', finalKey: 'g', specialKey: 's' }
+        brawler: { key: 'brawler', name: 'Brawler', color: '#f97316', mySrc: '', spriteKey: '', description: 'A bruiser that wins by pressure.', speed: 1.0, jumpMultiplier: 1.0, canGlide: false, glideGravityMultiplier: 0.09, glideFallSpeed: 2.1, sizeMultiplier: 1.1, attackMultiplier: 1.8, fallDamageMultiplier: 1.0, passiveFallDamage: true, specialPower: 22, specialCooldown: 50, attackWindup: 12, attackRange: 24, attackKnockback: 18, attackSpeed: 0.9, projectileSpeed: 10, leapStrength: 11, effectRadius: 20, leftKey: 'a', rightKey: 'd', jumpKey: 'w', attackKey: 'f', finalKey: 'g', specialKey: 's' },
+        speedster: { key: 'speedster', name: 'Speedster', color: '#22c55e', mySrc: '', spriteKey: '', description: 'A skirmisher that overwhelms with movement.', speed: 1.7, jumpMultiplier: 1.25, canGlide: true, glideGravityMultiplier: 0.07, glideFallSpeed: 2.8, sizeMultiplier: 0.95, attackMultiplier: 1.3, fallDamageMultiplier: 0.9, passiveFallDamage: false, specialPower: 19, specialCooldown: 36, attackWindup: 7, attackRange: 28, attackKnockback: 13, attackSpeed: 1.5, projectileSpeed: 16, leapStrength: 15, effectRadius: 14, leftKey: 'a', rightKey: 'd', jumpKey: 'w', attackKey: 'f', finalKey: 'g', specialKey: 's' },
+        glass: { key: 'glass-cannon', name: 'Glass Cannon', color: '#f43f5e', mySrc: '', spriteKey: '', description: 'A fragile monster with massive burst damage.', speed: 1.2, jumpMultiplier: 1.15, canGlide: true, glideGravityMultiplier: 0.08, glideFallSpeed: 2.5, sizeMultiplier: 0.9, attackMultiplier: 1.7, fallDamageMultiplier: 1.2, passiveFallDamage: false, specialPower: 30, specialCooldown: 52, attackWindup: 9, attackRange: 30, attackKnockback: 18, attackSpeed: 1.2, projectileSpeed: 21, leapStrength: 14, effectRadius: 22, leftKey: 'a', rightKey: 'd', jumpKey: 'w', attackKey: 'f', finalKey: 'g', specialKey: 's' },
+        tank: { key: 'tank', name: 'Tank', color: '#64748b', mySrc: '', spriteKey: '', description: 'A resilient defender who absorbs pressure.', speed: 0.85, jumpMultiplier: 0.9, canGlide: true, glideGravityMultiplier: 0.1, glideFallSpeed: 2.0, sizeMultiplier: 1.25, attackMultiplier: 1.6, fallDamageMultiplier: 1.2, passiveFallDamage: true, specialPower: 25, specialCooldown: 60, attackWindup: 12, attackRange: 22, attackKnockback: 19, attackSpeed: 0.8, projectileSpeed: 12, leapStrength: 9, effectRadius: 25, leftKey: 'a', rightKey: 'd', jumpKey: 'w', attackKey: 'f', finalKey: 'g', specialKey: 's' },
+        ranger: { key: 'ranger', name: 'Ranger', color: '#0ea5e9', mySrc: '', spriteKey: '', description: 'A precision fighter controlling space.', speed: 1.2, jumpMultiplier: 1.1, canGlide: true, glideGravityMultiplier: 0.08, glideFallSpeed: 2.4, sizeMultiplier: 1.0, attackMultiplier: 1.4, fallDamageMultiplier: 1.0, passiveFallDamage: false, specialPower: 24, specialCooldown: 40, attackWindup: 10, attackRange: 32, attackKnockback: 16, attackSpeed: 1.1, projectileSpeed: 18, leapStrength: 10, effectRadius: 18, leftKey: 'a', rightKey: 'd', jumpKey: 'w', attackKey: 'f', finalKey: 'g', specialKey: 's' },
+        acrobat: { key: 'acrobat', name: 'Acrobat', color: '#a78bfa', mySrc: '', spriteKey: '', description: 'A nimble aerial specialist.', speed: 1.45, jumpMultiplier: 1.45, canGlide: true, glideGravityMultiplier: 0.06, glideFallSpeed: 3.0, sizeMultiplier: 0.96, attackMultiplier: 1.35, fallDamageMultiplier: 0.9, passiveFallDamage: false, specialPower: 21, specialCooldown: 34, attackWindup: 8, attackRange: 30, attackKnockback: 14, attackSpeed: 1.6, projectileSpeed: 17, leapStrength: 17, effectRadius: 15, leftKey: 'a', rightKey: 'd', jumpKey: 'w', attackKey: 'f', finalKey: 'g', specialKey: 's' },
+        mage: { key: 'mage', name: 'Mage', color: '#8b5cf6', mySrc: '', spriteKey: '', description: 'A caster focused on spell bursts.', speed: 1.12, jumpMultiplier: 1.16, canGlide: true, glideGravityMultiplier: 0.07, glideFallSpeed: 2.7, sizeMultiplier: 0.98, attackMultiplier: 1.5, fallDamageMultiplier: 0.95, passiveFallDamage: false, specialPower: 28, specialCooldown: 48, attackWindup: 11, attackRange: 34, attackKnockback: 17, attackSpeed: 1.0, projectileSpeed: 22, leapStrength: 12, effectRadius: 20, leftKey: 'a', rightKey: 'd', jumpKey: 'w', attackKey: 'f', finalKey: 'g', specialKey: 's' },
+        support: { key: 'support', name: 'Support', color: '#2dd4bf', mySrc: '', spriteKey: '', description: 'A utility fighter controlling tempo and space.', speed: 1.08, jumpMultiplier: 1.1, canGlide: true, glideGravityMultiplier: 0.08, glideFallSpeed: 2.4, sizeMultiplier: 1.02, attackMultiplier: 1.2, fallDamageMultiplier: 1.0, passiveFallDamage: false, specialPower: 20, specialCooldown: 42, attackWindup: 10, attackRange: 27, attackKnockback: 15, attackSpeed: 1.1, projectileSpeed: 15, leapStrength: 11, effectRadius: 17, leftKey: 'a', rightKey: 'd', jumpKey: 'w', attackKey: 'f', finalKey: 'g', specialKey: 's' },
+        shadow: { key: 'shadow-assassin', name: 'Shadow Assassin', color: '#111827', mySrc: '', spriteKey: '', description: 'A stealthy assassin built for fast, lethal bursts.', speed: 1.6, jumpMultiplier: 1.35, canGlide: true, glideGravityMultiplier: 0.06, glideFallSpeed: 3.1, sizeMultiplier: 0.92, attackMultiplier: 1.55, fallDamageMultiplier: 0.9, passiveFallDamage: false, specialPower: 27, specialCooldown: 35, attackWindup: 9, attackRange: 29, attackKnockback: 17, attackSpeed: 1.7, projectileSpeed: 20, leapStrength: 16, effectRadius: 16, leftKey: 'a', rightKey: 'd', jumpKey: 'w', attackKey: 'f', finalKey: 'g', specialKey: 's' }
       };
 
       const attackPresets = {
-        custom: { label: 'Custom attack', attackType: 'custom', attackWindup: 10, attackRange: 26, attackKnockback: 15, attackSpeed: 1.2, projectileSpeed: 14, leapStrength: 12, effectRadius: 18, attackCode: 'fighter.vx += fighter.facing * 10; if (opponent) { opponent.vx += fighter.facing * 8; opponent.vy -= 3; }' },
-        jab: { label: 'Jab', attackType: 'jab', attackWindup: 6, attackRange: 18, attackKnockback: 10, attackSpeed: 1.7, projectileSpeed: 8, leapStrength: 8, effectRadius: 10, attackCode: 'fighter.vx += fighter.facing * 6; if (opponent) { opponent.vx += fighter.facing * 4; opponent.vy -= 2; }' },
-        uppercut: { label: 'Uppercut', attackType: 'uppercut', attackWindup: 11, attackRange: 20, attackKnockback: 21, attackSpeed: 0.9, projectileSpeed: 7, leapStrength: 14, effectRadius: 12, attackCode: 'fighter.vy -= 8; if (opponent) { opponent.vy -= 8; opponent.vx += fighter.facing * 6; }' },
-        slash: { label: 'Arc Slash', attackType: 'slash', attackWindup: 9, attackRange: 28, attackKnockback: 16, attackSpeed: 1.3, projectileSpeed: 12, leapStrength: 10, effectRadius: 16, attackCode: 'fighter.vx += fighter.facing * 14; if (opponent) { opponent.vx += fighter.facing * 10; opponent.vy -= 4; }' },
-        lunge: { label: 'Lunge', attackType: 'lunge', attackWindup: 8, attackRange: 30, attackKnockback: 17, attackSpeed: 1.5, projectileSpeed: 11, leapStrength: 18, effectRadius: 14, attackCode: 'fighter.vx += fighter.facing * 16; if (opponent) { opponent.vx += fighter.facing * 12; }' },
-        spin: { label: 'Spin Kick', attackType: 'spin', attackWindup: 10, attackRange: 26, attackKnockback: 20, attackSpeed: 1.35, projectileSpeed: 10, leapStrength: 9, effectRadius: 21, attackCode: 'fighter.vx += fighter.facing * 12; if (opponent) { opponent.vx += fighter.facing * 15; opponent.vy -= 5; }' },
-        dash: { label: 'Dash Strike', attackType: 'dash', attackWindup: 7, attackRange: 32, attackKnockback: 15, attackSpeed: 1.7, projectileSpeed: 13, leapStrength: 12, effectRadius: 12, attackCode: 'fighter.vx += fighter.facing * 18; if (opponent) { opponent.vx += fighter.facing * 10; }' },
-        sweep: { label: 'Sweep', attackType: 'sweep', attackWindup: 12, attackRange: 24, attackKnockback: 19, attackSpeed: 0.95, projectileSpeed: 9, leapStrength: 8, effectRadius: 20, attackCode: 'fighter.vx += fighter.facing * 8; if (opponent) { opponent.vx += fighter.facing * 8; opponent.vy += 2; }' },
-        burst: { label: 'Burst Blast', attackType: 'burst', attackWindup: 9, attackRange: 35, attackKnockback: 18, attackSpeed: 1.25, projectileSpeed: 19, leapStrength: 11, effectRadius: 15, attackCode: 'fighter.vx += fighter.facing * 16; if (opponent) { opponent.vx += fighter.facing * 12; opponent.vy -= 3; }' },
-        beam: { label: 'Beam', attackType: 'beam', attackWindup: 15, attackRange: 40, attackKnockback: 14, attackSpeed: 0.8, projectileSpeed: 24, leapStrength: 10, effectRadius: 13, attackCode: 'fighter.vx += fighter.facing * 8; if (opponent) { opponent.vx += fighter.facing * 10; opponent.vy -= 4; }' },
-        volley: { label: 'Volley', attackType: 'volley', attackWindup: 12, attackRange: 38, attackKnockback: 13, attackSpeed: 1.1, projectileSpeed: 20, leapStrength: 11, effectRadius: 14, attackCode: 'fighter.vx += fighter.facing * 10; if (opponent) { opponent.vx += fighter.facing * 12; opponent.vy -= 2; }' },
-        hook: { label: 'Hook', attackType: 'hook', attackWindup: 8, attackRange: 20, attackKnockback: 15, attackSpeed: 1.5, projectileSpeed: 7, leapStrength: 9, effectRadius: 11, attackCode: 'fighter.vx += fighter.facing * 12; if (opponent) { opponent.vx += fighter.facing * 9; opponent.vy -= 4; }' },
-        hammer: { label: 'Hammer', attackType: 'hammer', attackWindup: 14, attackRange: 22, attackKnockback: 26, attackSpeed: 0.7, projectileSpeed: 8, leapStrength: 15, effectRadius: 24, attackCode: 'fighter.vy -= 3; if (opponent) { opponent.vy += 4; opponent.vx += fighter.facing * 8; }' },
-        drill: { label: 'Drill', attackType: 'drill', attackWindup: 10, attackRange: 26, attackKnockback: 20, attackSpeed: 1.45, projectileSpeed: 13, leapStrength: 13, effectRadius: 18, attackCode: 'fighter.vx += fighter.facing * 18; if (opponent) { opponent.vx += fighter.facing * 14; }' },
-        meteor: { label: 'Meteor', attackType: 'meteor', attackWindup: 16, attackRange: 36, attackKnockback: 28, attackSpeed: 0.75, projectileSpeed: 18, leapStrength: 17, effectRadius: 24, attackCode: 'fighter.vy -= 5; if (opponent) { opponent.vy -= 10; opponent.vx += fighter.facing * 8; }' },
-        nova: { label: 'Nova', attackType: 'nova', attackWindup: 18, attackRange: 42, attackKnockback: 22, attackSpeed: 0.65, projectileSpeed: 22, leapStrength: 12, effectRadius: 28, attackCode: 'fighter.vx += fighter.facing * 8; if (opponent) { opponent.vx += fighter.facing * 12; opponent.vy -= 3; }' },
-        whip: { label: 'Whip', attackType: 'whip', attackWindup: 9, attackRange: 34, attackKnockback: 12, attackSpeed: 1.25, projectileSpeed: 16, leapStrength: 10, effectRadius: 15, attackCode: 'fighter.vx += fighter.facing * 12; if (opponent) { opponent.vx += fighter.facing * 8; }' },
-        stomp: { label: 'Stomp', attackType: 'stomp', attackWindup: 14, attackRange: 20, attackKnockback: 24, attackSpeed: 0.8, projectileSpeed: 7, leapStrength: 20, effectRadius: 26, attackCode: 'fighter.vy += 5; if (opponent) { opponent.vy += 10; opponent.vx += fighter.facing * 6; }' },
-        orb: { label: 'Orb', attackType: 'orb', attackWindup: 10, attackRange: 31, attackKnockback: 16, attackSpeed: 1.1, projectileSpeed: 20, leapStrength: 12, effectRadius: 18, attackCode: 'fighter.vx += fighter.facing * 14; if (opponent) { opponent.vx += fighter.facing * 10; }' },
-        snare: { label: 'Snare', attackType: 'snare', attackWindup: 11, attackRange: 28, attackKnockback: 13, attackSpeed: 1.0, projectileSpeed: 15, leapStrength: 9, effectRadius: 17, attackCode: 'fighter.vx += fighter.facing * 10; if (opponent) { opponent.vx += fighter.facing * 8; opponent.vy -= 2; }' },
-        tornado: { label: 'Tornado', attackType: 'tornado', attackWindup: 13, attackRange: 30, attackKnockback: 19, attackSpeed: 1.0, projectileSpeed: 15, leapStrength: 13, effectRadius: 23, attackCode: 'fighter.vx += fighter.facing * 12; if (opponent) { opponent.vx += fighter.facing * 10; opponent.vy -= 2; }' },
-        cross: { label: 'Cross Strike', attackType: 'cross', attackWindup: 10, attackRange: 22, attackKnockback: 17, attackSpeed: 1.3, projectileSpeed: 11, leapStrength: 11, effectRadius: 13, attackCode: 'fighter.vx += fighter.facing * 12; if (opponent) { opponent.vx += fighter.facing * 9; opponent.vy -= 2; }' },
-        airslash: { label: 'Aerial Slash', attackType: 'airslash', attackWindup: 8, attackRange: 30, attackKnockback: 18, attackSpeed: 1.5, projectileSpeed: 12, leapStrength: 17, effectRadius: 18, attackCode: 'fighter.vy -= 6; if (opponent) { opponent.vy -= 8; opponent.vx += fighter.facing * 10; }' },
-        shieldbash: { label: 'Shield Bash', attackType: 'shieldbash', attackWindup: 12, attackRange: 24, attackKnockback: 23, attackSpeed: 0.9, projectileSpeed: 7, leapStrength: 10, effectRadius: 20, attackCode: 'fighter.vx += fighter.facing * 10; if (opponent) { opponent.vx += fighter.facing * 12; }' },
-        divine: { label: 'Divine Wave', attackType: 'divine', attackWindup: 15, attackRange: 40, attackKnockback: 17, attackSpeed: 0.8, projectileSpeed: 21, leapStrength: 12, effectRadius: 25, attackCode: 'fighter.vx += fighter.facing * 8; if (opponent) { opponent.vx += fighter.facing * 10; opponent.vy -= 6; }' },
-        shadow: { label: 'Shadow Cut', attackType: 'shadow', attackWindup: 7, attackRange: 27, attackKnockback: 19, attackSpeed: 1.7, projectileSpeed: 17, leapStrength: 14, effectRadius: 15, attackCode: 'fighter.vx += fighter.facing * 14; if (opponent) { opponent.vx += fighter.facing * 12; opponent.vy -= 2; }' }
+        custom: { label: 'Custom attack', attackType: 'custom', attackWindup: 10, attackRange: 26, attackKnockback: 15, attackSpeed: 1.2, projectileSpeed: 14, leapStrength: 12, effectRadius: 18, attackCode: 'fighter.vx += fighter.facing * 10;' },
+        jab: { label: 'Jab', attackType: 'jab', attackWindup: 6, attackRange: 18, attackKnockback: 10, attackSpeed: 1.7, projectileSpeed: 8, leapStrength: 8, effectRadius: 10, attackCode: 'fighter.vx += fighter.facing * 8; if (opponent) { opponent.vx += fighter.facing * 5; opponent.vy -= 2; }' },
+        uppercut: { label: 'Uppercut', attackType: 'uppercut', attackWindup: 11, attackRange: 20, attackKnockback: 21, attackSpeed: 0.9, projectileSpeed: 7, leapStrength: 14, effectRadius: 12, attackCode: 'fighter.vy -= 4; fighter.vx += fighter.facing * 8; if (opponent) { opponent.vy -= 7; opponent.vx += fighter.facing * 3; }' },
+        slash: { label: 'Arc Slash', attackType: 'slash', attackWindup: 9, attackRange: 28, attackKnockback: 16, attackSpeed: 1.3, projectileSpeed: 12, leapStrength: 10, effectRadius: 16, attackCode: 'fighter.vx += fighter.facing * 12; if (opponent) { opponent.vx += fighter.facing * 6; opponent.vy -= 3; }' },
+        lunge: { label: 'Lunge', attackType: 'lunge', attackWindup: 8, attackRange: 30, attackKnockback: 17, attackSpeed: 1.5, projectileSpeed: 11, leapStrength: 18, effectRadius: 14, attackCode: 'fighter.vx += fighter.facing * 15; if (opponent) { opponent.vx += fighter.facing * 8; }' },
+        spin: { label: 'Spin Kick', attackType: 'spin', attackWindup: 10, attackRange: 26, attackKnockback: 20, attackSpeed: 1.35, projectileSpeed: 10, leapStrength: 9, effectRadius: 21, attackCode: 'fighter.vx += fighter.facing * 11; if (opponent) { opponent.vx += fighter.facing * 9; opponent.vy -= 3; }' },
+        dash: { label: 'Dash Strike', attackType: 'dash', attackWindup: 7, attackRange: 32, attackKnockback: 15, attackSpeed: 1.7, projectileSpeed: 13, leapStrength: 12, effectRadius: 12, attackCode: 'fighter.vx += fighter.facing * 16; if (opponent) { opponent.vx += fighter.facing * 7; }' },
+        sweep: { label: 'Sweep', attackType: 'sweep', attackWindup: 12, attackRange: 24, attackKnockback: 19, attackSpeed: 0.95, projectileSpeed: 9, leapStrength: 8, effectRadius: 20, attackCode: 'fighter.vy += 2; if (opponent) { opponent.vy += 5; opponent.vx += fighter.facing * 4; }' },
+        burst: { label: 'Burst Blast', attackType: 'burst', attackWindup: 9, attackRange: 35, attackKnockback: 18, attackSpeed: 1.25, projectileSpeed: 19, leapStrength: 11, effectRadius: 15, attackCode: 'fighter.vx += fighter.facing * 12; if (opponent) { opponent.vx += fighter.facing * 8; opponent.vy -= 2; }' },
+        beam: { label: 'Beam', attackType: 'beam', attackWindup: 15, attackRange: 40, attackKnockback: 14, attackSpeed: 0.8, projectileSpeed: 24, leapStrength: 10, effectRadius: 13, attackCode: 'fighter.vx += fighter.facing * 8; if (opponent) { opponent.vx += fighter.facing * 6; opponent.vy -= 1; }' },
+        volley: { label: 'Volley', attackType: 'volley', attackWindup: 12, attackRange: 38, attackKnockback: 13, attackSpeed: 1.1, projectileSpeed: 20, leapStrength: 11, effectRadius: 14, attackCode: 'fighter.vx += fighter.facing * 9; if (opponent) { opponent.vx += fighter.facing * 7; }' },
+        hook: { label: 'Hook', attackType: 'hook', attackWindup: 8, attackRange: 20, attackKnockback: 15, attackSpeed: 1.5, projectileSpeed: 7, leapStrength: 9, effectRadius: 11, attackCode: 'fighter.vx += fighter.facing * 11; if (opponent) { opponent.vx += fighter.facing * 6; opponent.vy -= 1; }' },
+        hammer: { label: 'Hammer', attackType: 'hammer', attackWindup: 14, attackRange: 22, attackKnockback: 26, attackSpeed: 0.7, projectileSpeed: 8, leapStrength: 15, effectRadius: 24, attackCode: 'fighter.vx += fighter.facing * 7; if (opponent) { opponent.vy -= 6; opponent.vx += fighter.facing * 10; }' },
+        drill: { label: 'Drill', attackType: 'drill', attackWindup: 10, attackRange: 26, attackKnockback: 20, attackSpeed: 1.45, projectileSpeed: 13, leapStrength: 13, effectRadius: 18, attackCode: 'fighter.vx += fighter.facing * 14; if (opponent) { opponent.vx += fighter.facing * 9; opponent.vy -= 3; }' },
+        meteor: { label: 'Meteor', attackType: 'meteor', attackWindup: 16, attackRange: 36, attackKnockback: 28, attackSpeed: 0.75, projectileSpeed: 18, leapStrength: 17, effectRadius: 24, attackCode: 'fighter.vx += fighter.facing * 8; if (opponent) { opponent.vx += fighter.facing * 12; opponent.vy -= 8; }' },
+        nova: { label: 'Nova', attackType: 'nova', attackWindup: 18, attackRange: 42, attackKnockback: 22, attackSpeed: 0.65, projectileSpeed: 22, leapStrength: 12, effectRadius: 28, attackCode: 'fighter.vx += fighter.facing * 10; if (opponent) { opponent.vx += fighter.facing * 9; opponent.vy -= 5; }' },
+        whip: { label: 'Whip', attackType: 'whip', attackWindup: 9, attackRange: 34, attackKnockback: 12, attackSpeed: 1.25, projectileSpeed: 16, leapStrength: 10, effectRadius: 15, attackCode: 'fighter.vx += fighter.facing * 11; if (opponent) { opponent.vx += fighter.facing * 5; opponent.vy += 1; }' },
+        stomp: { label: 'Stomp', attackType: 'stomp', attackWindup: 14, attackRange: 20, attackKnockback: 24, attackSpeed: 0.8, projectileSpeed: 7, leapStrength: 20, effectRadius: 26, attackCode: 'fighter.vy += 1; if (opponent) { opponent.vy += 8; opponent.vx += fighter.facing * 5; }' },
+        orb: { label: 'Orb', attackType: 'orb', attackWindup: 10, attackRange: 31, attackKnockback: 16, attackSpeed: 1.1, projectileSpeed: 20, leapStrength: 12, effectRadius: 18, attackCode: 'fighter.vx += fighter.facing * 10; if (opponent) { opponent.vx += fighter.facing * 8; opponent.vy -= 2; }' },
+        snare: { label: 'Snare', attackType: 'snare', attackWindup: 11, attackRange: 28, attackKnockback: 13, attackSpeed: 1.0, projectileSpeed: 15, leapStrength: 9, effectRadius: 17, attackCode: 'fighter.vx += fighter.facing * 9; if (opponent) { opponent.vx += fighter.facing * 4; opponent.vy -= 2; }' },
+        tornado: { label: 'Tornado', attackType: 'tornado', attackWindup: 13, attackRange: 30, attackKnockback: 19, attackSpeed: 1.0, projectileSpeed: 15, leapStrength: 13, effectRadius: 23, attackCode: 'fighter.vx += fighter.facing * 10; if (opponent) { opponent.vx += fighter.facing * 7; opponent.vy -= 5; }' },
+        cross: { label: 'Cross Strike', attackType: 'cross', attackWindup: 10, attackRange: 22, attackKnockback: 17, attackSpeed: 1.3, projectileSpeed: 11, leapStrength: 11, effectRadius: 13, attackCode: 'fighter.vx += fighter.facing * 12; if (opponent) { opponent.vx += fighter.facing * 8; opponent.vy -= 2; }' },
+        airslash: { label: 'Aerial Slash', attackType: 'airslash', attackWindup: 8, attackRange: 30, attackKnockback: 18, attackSpeed: 1.5, projectileSpeed: 12, leapStrength: 17, effectRadius: 18, attackCode: 'fighter.vy -= 2; fighter.vx += fighter.facing * 14; if (opponent) { opponent.vx += fighter.facing * 6; opponent.vy -= 5; }' },
+        shieldbash: { label: 'Shield Bash', attackType: 'shieldbash', attackWindup: 12, attackRange: 24, attackKnockback: 23, attackSpeed: 0.9, projectileSpeed: 7, leapStrength: 10, effectRadius: 20, attackCode: 'fighter.vx += fighter.facing * 9; if (opponent) { opponent.vx += fighter.facing * 10; opponent.vy -= 4; }' },
+        divine: { label: 'Divine Wave', attackType: 'divine', attackWindup: 15, attackRange: 40, attackKnockback: 17, attackSpeed: 0.8, projectileSpeed: 21, leapStrength: 12, effectRadius: 25, attackCode: 'fighter.vx += fighter.facing * 9; if (opponent) { opponent.vx += fighter.facing * 8; opponent.vy -= 4; }' },
+        shadow: { label: 'Shadow Cut', attackType: 'shadow', attackWindup: 7, attackRange: 27, attackKnockback: 19, attackSpeed: 1.7, projectileSpeed: 17, leapStrength: 14, effectRadius: 15, attackCode: 'fighter.vx += fighter.facing * 15; if (opponent) { opponent.vx += fighter.facing * 7; opponent.vy -= 4; }' }
       };
 
       const specialPresets = {
-        custom: { label: 'Custom special', power: 18, cooldown: 45, speed: 14, radius: 18, direction: 'forward' },
-        burst: { label: 'Burst', power: 24, cooldown: 38, speed: 18, radius: 20, direction: 'forward' },
-        beam: { label: 'Beam', power: 27, cooldown: 50, speed: 22, radius: 18, direction: 'forward' },
-        nova: { label: 'Nova', power: 31, cooldown: 62, speed: 24, radius: 24, direction: 'forward' },
-        dash: { label: 'Dash', power: 22, cooldown: 35, speed: 19, radius: 16, direction: 'forward' },
-        snare: { label: 'Snare', power: 19, cooldown: 48, speed: 16, radius: 17, direction: 'forward' },
-        orbital: { label: 'Orbital', power: 26, cooldown: 58, speed: 23, radius: 21, direction: 'forward' },
-        upspec: { label: 'Up Special', power: 23, cooldown: 40, speed: 18, radius: 18, direction: 'up' },
-        downspec: { label: 'Down Special', power: 25, cooldown: 42, speed: 16, radius: 20, direction: 'down' },
-        leftspec: { label: 'Left Special', power: 21, cooldown: 39, speed: 17, radius: 18, direction: 'left' },
-        rightspec: { label: 'Right Special', power: 21, cooldown: 39, speed: 17, radius: 18, direction: 'right' }
+        custom: { label: 'Custom special', power: 18, cooldown: 45, speed: 14, radius: 18, direction: 'forward', launchForce: 12, duration: 24, knockback: 14, gravity: 0.4, selfPush: 2.2, hitStun: 12, pierce: 1, trail: 8, chargeTime: 4, recoil: 5 },
+        burst: { label: 'Burst', power: 24, cooldown: 38, speed: 18, radius: 20, direction: 'forward', launchForce: 16, duration: 26, knockback: 18, gravity: 0.5, selfPush: 2.5, hitStun: 14, pierce: 1, trail: 8, chargeTime: 4, recoil: 6 },
+        beam: { label: 'Beam', power: 27, cooldown: 50, speed: 22, radius: 18, direction: 'forward', launchForce: 18, duration: 30, knockback: 15, gravity: 0.25, selfPush: 2.2, hitStun: 15, pierce: 2, trail: 10, chargeTime: 6, recoil: 5 },
+        nova: { label: 'Nova', power: 31, cooldown: 62, speed: 24, radius: 24, direction: 'forward', launchForce: 18, duration: 32, knockback: 21, gravity: 0.3, selfPush: 2.0, hitStun: 18, pierce: 2, trail: 12, chargeTime: 7, recoil: 7 },
+        dash: { label: 'Dash', power: 22, cooldown: 35, speed: 19, radius: 16, direction: 'forward', launchForce: 15, duration: 24, knockback: 16, gravity: 0.6, selfPush: 3.2, hitStun: 12, pierce: 1, trail: 9, chargeTime: 3, recoil: 5 },
+        snare: { label: 'Snare', power: 19, cooldown: 48, speed: 16, radius: 17, direction: 'forward', launchForce: 12, duration: 28, knockback: 15, gravity: 0.35, selfPush: 2.4, hitStun: 20, pierce: 1, trail: 7, chargeTime: 5, recoil: 4 },
+        orbital: { label: 'Orbital', power: 26, cooldown: 58, speed: 23, radius: 21, direction: 'forward', launchForce: 17, duration: 35, knockback: 20, gravity: 0.2, selfPush: 2.6, hitStun: 17, pierce: 3, trail: 11, chargeTime: 6, recoil: 6 },
+        upspec: { label: 'Up Special', power: 23, cooldown: 40, speed: 18, radius: 18, direction: 'up', launchForce: 16, duration: 24, knockback: 16, gravity: 0.45, selfPush: 2.8, hitStun: 13, pierce: 1, trail: 8, chargeTime: 4, recoil: 4 },
+        downspec: { label: 'Down Special', power: 25, cooldown: 42, speed: 16, radius: 20, direction: 'down', launchForce: 15, duration: 22, knockback: 18, gravity: 0.55, selfPush: 2.4, hitStun: 14, pierce: 1, trail: 9, chargeTime: 4, recoil: 6 },
+        leftspec: { label: 'Left Special', power: 21, cooldown: 39, speed: 17, radius: 18, direction: 'left', launchForce: 14, duration: 23, knockback: 16, gravity: 0.5, selfPush: 2.3, hitStun: 12, pierce: 1, trail: 8, chargeTime: 4, recoil: 5 },
+        rightspec: { label: 'Right Special', power: 21, cooldown: 39, speed: 17, radius: 18, direction: 'right', launchForce: 14, duration: 23, knockback: 16, gravity: 0.5, selfPush: 2.3, hitStun: 12, pierce: 1, trail: 8, chargeTime: 4, recoil: 5 }
       };
 
       const finalPresets = {
@@ -519,6 +569,14 @@
         return String(value ?? '').replace(/\\/g, '\\\\').replace(/'/g, "\\'");
       }
 
+      function updateSpecialDirectionButtons() {
+        const dir = document.getElementById('specialDirection').value || 'forward';
+        document.querySelectorAll('.direction-button').forEach((button) => {
+          const active = button.dataset.direction === dir;
+          button.classList.toggle('active', active);
+        });
+      }
+
       function applyFighterPreset(name) {
         const preset = fighterPresets[name];
         if (!preset) return;
@@ -549,7 +607,18 @@
         setFieldValue('specialSpeedEditor', preset.speed);
         setFieldValue('specialRadiusEditor', preset.radius);
         setFieldValue('specialDirection', preset.direction || 'forward');
+        setFieldValue('specialLaunchForce', preset.launchForce || preset.speed);
+        setFieldValue('specialDuration', preset.duration || 24);
+        setFieldValue('specialKnockback', preset.knockback || preset.power);
+        setFieldValue('specialGravity', preset.gravity || 0.5);
+        setFieldValue('specialSelfPush', preset.selfPush || 2.2);
+        setFieldValue('specialHitStun', preset.hitStun || 12);
+        setFieldValue('specialPierce', preset.pierce || 1);
+        setFieldValue('specialTrail', preset.trail || 8);
+        setFieldValue('specialChargeTime', preset.chargeTime || 4);
+        setFieldValue('specialRecoil', preset.recoil || 5);
         setFieldValue('specialText', 'launches a ' + (preset.label || 'special') + ' burst!');
+        updateSpecialDirectionButtons();
       }
 
       function applyFinalPreset(name) {
@@ -567,7 +636,7 @@
         const attack = attackPresets[selected] || attackPresets.custom;
         const windup = Number(getValue('attackWindup', attack.attackWindup));
         const code = attack.attackCode || 'fighter.vx += fighter.facing * 10;';
-        return "\n  attack(fighter, opponent) {\n    if (fighter.stocks <= 0 || fighter.attackCooldown > 0 || fighter.stunned > 0) return;\n    fighter.attackCooldown = " + (windup + 8) + ";\n    fighter.punchFrame = 0;\n    fighter.punchAnimating = true;\n    " + code + "\n  },";
+        return "\n  attack(fighter, opponent) {\n    if (fighter.stocks <= 0 || fighter.attackCooldown > 0 || fighter.stunned > 0) return;\n    fighter.attackCooldown = " + (windup + 8) + ";\n    " + code + "\n    if (opponent) { opponent.hitLag += 2; opponent.vx += fighter.facing * 2; }\n  }";
       }
 
       function buildSpecialFunction() {
@@ -578,17 +647,27 @@
         const cooldown = Number(getValue('specialCooldownEditor', preset.cooldown));
         const speed = Number(getValue('specialSpeedEditor', preset.speed));
         const radius = Number(getValue('specialRadiusEditor', preset.radius));
+        const launchForce = Number(getValue('specialLaunchForce', preset.launchForce || speed));
+        const duration = Number(getValue('specialDuration', preset.duration || 24));
+        const knockback = Number(getValue('specialKnockback', preset.knockback || power));
+        const gravity = Number(getValue('specialGravity', preset.gravity || 0.5));
+        const selfPush = Number(getValue('specialSelfPush', preset.selfPush || 2.2));
+        const hitStun = Number(getValue('specialHitStun', preset.hitStun || 12));
+        const pierce = Number(getValue('specialPierce', preset.pierce || 1));
+        const trail = Number(getValue('specialTrail', preset.trail || 8));
+        const chargeTime = Number(getValue('specialChargeTime', preset.chargeTime || 4));
+        const recoil = Number(getValue('specialRecoil', preset.recoil || 5));
         const text = getValue('specialText', 'launches a signature special!');
 
         const codeByDirection = {
-          forward: "fighter.vx += fighter.facing * " + speed + "; if (opponent) { opponent.vx += fighter.facing * " + Math.max(6, Math.round(power / 2)) + "; opponent.vy -= " + Math.max(1, Math.round(radius / 5)) + "; } addCommentary(fighter.name + ' " + text + "');",
-          up: "fighter.vy -= " + Math.max(6, Math.round(power / 2) + 3) + "; fighter.vx += fighter.facing * " + Math.max(4, Math.round(speed / 3)) + "; if (opponent) { opponent.vy -= " + Math.max(5, Math.round(radius / 4)) + "; opponent.vx += fighter.facing * " + Math.max(3, Math.round(speed / 5)) + "; } addCommentary(fighter.name + ' " + text + "');",
-          down: "fighter.vy += " + Math.max(5, Math.round(power / 2)) + "; if (opponent) { opponent.vy += " + Math.max(4, Math.round(radius / 6)) + "; opponent.vx += fighter.facing * " + Math.max(7, Math.round(speed / 2)) + "; } addCommentary(fighter.name + ' " + text + "');",
+          forward: "fighter.vx += fighter.facing * " + selfPush + "; if (opponent) { opponent.vx += fighter.facing * " + Math.max(6, Math.round(power / 2)) + "; opponent.vy -= " + Math.max(1, Math.round(knockback / 10)) + "; } addCommentary(fighter.name + ' " + text + "');",
+          up: "fighter.vy -= " + Math.max(6, Math.round(launchForce / 1.3)) + "; fighter.vx += fighter.facing * " + Math.max(3, Math.round(speed / 5)) + "; if (opponent) { opponent.vy -= " + Math.max(5, Math.round(power / 2)) + "; opponent.vx += fighter.facing * 2; } addCommentary(fighter.name + ' " + text + "');",
+          down: "fighter.vy += " + Math.max(5, Math.round(launchForce / 1.6)) + "; if (opponent) { opponent.vy += " + Math.max(4, Math.round(radius / 6)) + "; opponent.vx += fighter.facing * 2; } addCommentary(fighter.name + ' " + text + "');",
           left: "fighter.x -= " + Math.max(10, Math.round(speed / 1.2)) + "; if (opponent) { opponent.x -= " + Math.max(8, Math.round(radius / 2)) + "; opponent.vx -= 3; } addCommentary(fighter.name + ' " + text + "');",
           right: "fighter.x += " + Math.max(10, Math.round(speed / 1.2)) + "; if (opponent) { opponent.x += " + Math.max(8, Math.round(radius / 2)) + "; opponent.vx += 3; } addCommentary(fighter.name + ' " + text + "');"
         };
 
-        return "\n  special(fighter, opponent) {\n    if (fighter.specialCooldown > 0 || fighter.stunned > 0) return;\n    fighter.specialCooldown = " + cooldown + ";\n    " + (codeByDirection[direction] || codeByDirection.forward) + "\n  },";
+        return "\n  special(fighter, opponent) {\n    if (fighter.specialCooldown > 0 || fighter.stunned > 0) return;\n    fighter.specialCooldown = " + cooldown + ";\n    fighter.hitFlash = " + chargeTime + ";\n    " + (codeByDirection[direction] || codeByDirection.forward) + "\n    fighter.vx -= fighter.facing * " + recoil + ";\n    if (opponent) {\n      opponent.hitStun = " + hitStun + ";\n      opponent.vx += fighter.facing * " + Math.max(2, Math.round(knockback / 6)) + ";\n      opponent.vy -= " + Math.max(2, Math.round(knockback / 12)) + ";\n    }\n    if (radius > 0) {\n      const effectRange = " + radius + ";\n      if (opponent && Math.abs(fighter.x - opponent.x) <= effectRange) {\n        opponent.hp -= " + power + ";\n      }\n    }\n    fighter.specialTimer = " + duration + ";\n    fighter.gravity = " + gravity + ";\n    fighter.pierce = " + pierce + ";\n    fighter.trail = " + trail + ";\n  }";
       }
 
       function buildFinalFunction() {
@@ -601,14 +680,14 @@
         const text = getValue('finalText', 'unleashes a final smash!');
 
         const codeByDirection = {
-          forward: "fighter.vx += fighter.facing * " + Math.max(10, Math.round(power / 2)) + "; if (opponent) { opponent.vx += fighter.facing * " + Math.max(12, Math.round(power / 1.6)) + "; opponent.vy -= " + Math.max(8, Math.round(radius / 2)) + "; } addCommentary(fighter.name + ' " + text + "');",
-          up: "fighter.vy -= " + Math.max(10, Math.round(power / 2) + 4) + "; if (opponent) { opponent.vy -= " + Math.max(12, Math.round(radius / 2)) + "; opponent.vx += fighter.facing * " + Math.max(8, Math.round(power / 4)) + "; } addCommentary(fighter.name + ' " + text + "');",
-          down: "fighter.vy += " + Math.max(8, Math.round(power / 2)) + "; if (opponent) { opponent.vy += " + Math.max(8, Math.round(radius / 4)) + "; opponent.vx += fighter.facing * " + Math.max(9, Math.round(power / 5)) + "; } addCommentary(fighter.name + ' " + text + "');",
+          forward: "fighter.vx += fighter.facing * " + Math.max(10, Math.round(power / 2)) + "; if (opponent) { opponent.vx += fighter.facing * " + Math.max(12, Math.round(power / 1.6)) + "; opponent.vy -= 8; } addCommentary(fighter.name + ' " + text + "');",
+          up: "fighter.vy -= " + Math.max(10, Math.round(power / 2) + 4) + "; if (opponent) { opponent.vy -= " + Math.max(12, Math.round(radius / 2)) + "; opponent.vx += fighter.facing * 4; } addCommentary(fighter.name + ' " + text + "');",
+          down: "fighter.vy += " + Math.max(8, Math.round(power / 2)) + "; if (opponent) { opponent.vy += " + Math.max(8, Math.round(radius / 4)) + "; opponent.vx += fighter.facing * 3; } addCommentary(fighter.name + ' " + text + "');",
           left: "fighter.x -= " + Math.max(18, Math.round(power / 1.3)) + "; if (opponent) { opponent.x -= " + Math.max(12, Math.round(radius / 2)) + "; opponent.vx -= 6; } addCommentary(fighter.name + ' " + text + "');",
           right: "fighter.x += " + Math.max(18, Math.round(power / 1.3)) + "; if (opponent) { opponent.x += " + Math.max(12, Math.round(radius / 2)) + "; opponent.vx += 6; } addCommentary(fighter.name + ' " + text + "');"
         };
 
-        return "\n  final(fighter, opponent) {\n    if (fighter.finalCooldown > 0 || fighter.stunned > 0) return;\n    fighter.finalCooldown = " + cooldown + ";\n    " + (codeByDirection[direction] || codeByDirection.forward) + "\n  },";
+        return "\n  final(fighter, opponent) {\n    if (fighter.finalCooldown > 0 || fighter.stunned > 0) return;\n    fighter.finalCooldown = " + cooldown + ";\n    " + (codeByDirection[direction] || codeByDirection.forward) + "\n    if (opponent) {\n      opponent.hp -= " + power + ";\n      opponent.vx *= 1.25;\n      opponent.vy *= 1.2;\n    }\n  }";
       }
 
       function buildImageCreator() {
@@ -618,7 +697,7 @@
         const scale = Number(getValue('imageScale', 1.0));
         const offsetX = Number(getValue('imageOffsetX', 0));
         const offsetY = Number(getValue('imageOffsetY', 0));
-        return "\n  imageCreator() {\n    return {\n      mySrc: " + (mySrc ? "'" + escapeString(mySrc) + "'" : 'undefined') + ",\n      spriteKey: " + (spriteKey ? "'" + escapeString(spriteKey) + "'" : 'undefined') + ",\n      tint: '" + escapeString(tint) + "',\n      scale: " + scale + ",\n      offsetX: " + offsetX + ",\n      offsetY: " + offsetY + ",\n      key: '" + escapeString(getValue('key', 'custom-fighter')) + "'\n    };\n  },";
+        return "\n  imageCreator() {\n    return {\n      mySrc: " + (mySrc ? "'" + escapeString(mySrc) + "'" : 'undefined') + ",\n      spriteKey: " + (spriteKey ? "'" + escapeString(spriteKey) + "'" : 'undefined') + ",\n      tint: '" + escapeString(tint) + "',\n      scale: " + scale + ",\n      offsetX: " + offsetX + ",\n      offsetY: " + offsetY + "\n    };\n  }";
       }
 
       function buildModText() {
@@ -661,7 +740,7 @@
         const finalFn = buildFinalFunction();
         const imageFn = buildImageCreator();
 
-        return "Mods.registerCharacter({\n  key: '" + escapeString(key) + "',\n  name: '" + escapeString(name) + "',\n  color: '" + escapeString(color) + "',\n  description: '" + escapeString(description) + "',\n  mySrc: " + (mySrc ? "'" + escapeString(mySrc) + "'" : 'undefined') + ",\n  spriteKey: " + (spriteKey ? "'" + escapeString(spriteKey) + "'" : 'undefined') + ",\n  speed: " + speed + ",\n  jumpMultiplier: " + jumpMultiplier + ",\n  canGlide: " + canGlide + ",\n  glideGravityMultiplier: " + glideGravityMultiplier + ",\n  glideFallSpeed: " + glideFallSpeed + ",\n  sizeMultiplier: " + sizeMultiplier + ",\n  attackMultiplier: " + attackMultiplier + ",\n  fallDamageMultiplier: " + fallDamageMultiplier + ",\n  passiveFallDamage: " + passiveFallDamage + ",\n  specialPower: " + specialPower + ",\n  specialCooldown: " + specialCooldown + ",\n  attackWindup: " + attackWindup + ",\n  attackRange: " + attackRange + ",\n  attackKnockback: " + attackKnockback + ",\n  attackSpeed: " + attackSpeed + ",\n  projectileSpeed: " + projectileSpeed + ",\n  leapStrength: " + leapStrength + ",\n  effectRadius: " + effectRadius + ",\n  keys: {\n    left: '" + keys.left + "',\n    right: '" + keys.right + "',\n    jump: '" + keys.jump + "',\n    attack: '" + keys.attack + "',\n    final: '" + keys.final + "',\n    special: '" + keys.special + "'\n  },\n  " + imageFn + "\n  " + attackFn + "\n  " + specialFn + "\n  " + finalFn + "\n});";
+        return "Mods.registerCharacter({\n  key: '" + escapeString(key) + "',\n  name: '" + escapeString(name) + "',\n  color: '" + escapeString(color) + "',\n  description: '" + escapeString(description) + "',\n  mySrc: " + (mySrc ? "'" + escapeString(mySrc) + "'" : 'undefined') + ",\n  spriteKey: " + (spriteKey ? "'" + escapeString(spriteKey) + "'" : 'undefined') + ",\n  stats: {\n    speed: " + speed + ",\n    jumpMultiplier: " + jumpMultiplier + ",\n    canGlide: " + canGlide + ",\n    glideGravityMultiplier: " + glideGravityMultiplier + ",\n    glideFallSpeed: " + glideFallSpeed + ",\n    sizeMultiplier: " + sizeMultiplier + ",\n    attackMultiplier: " + attackMultiplier + ",\n    fallDamageMultiplier: " + fallDamageMultiplier + ",\n    passiveFallDamage: " + passiveFallDamage + ",\n    specialPower: " + specialPower + ",\n    specialCooldown: " + specialCooldown + ",\n    attackWindup: " + attackWindup + ",\n    attackRange: " + attackRange + ",\n    attackKnockback: " + attackKnockback + ",\n    attackSpeed: " + attackSpeed + ",\n    projectileSpeed: " + projectileSpeed + ",\n    leapStrength: " + leapStrength + ",\n    effectRadius: " + effectRadius + "\n  },\n  keys: {\n    left: '" + keys.left + "',\n    right: '" + keys.right + "',\n    jump: '" + keys.jump + "',\n    attack: '" + keys.attack + "',\n    final: '" + keys.final + "',\n    special: '" + keys.special + "'\n  },\n  movement: { canGlide: " + canGlide + ", glideGravityMultiplier: " + glideGravityMultiplier + ", glideFallSpeed: " + glideFallSpeed + " },\n" + attackFn + "\n" + specialFn + "\n" + finalFn + "\n" + imageFn + "\n});";
       }
 
       function updateOutput() {
@@ -729,8 +808,33 @@
         setFieldValue('specialSpeedEditor', preset.speed);
         setFieldValue('specialRadiusEditor', preset.radius);
         setFieldValue('specialDirection', preset.direction || 'forward');
+        setFieldValue('specialLaunchForce', preset.launchForce || preset.speed);
+        setFieldValue('specialDuration', preset.duration || 24);
+        setFieldValue('specialKnockback', preset.knockback || preset.power);
+        setFieldValue('specialGravity', preset.gravity || 0.5);
+        setFieldValue('specialSelfPush', preset.selfPush || 2.2);
+        setFieldValue('specialHitStun', preset.hitStun || 12);
+        setFieldValue('specialPierce', preset.pierce || 1);
+        setFieldValue('specialTrail', preset.trail || 8);
+        setFieldValue('specialChargeTime', preset.chargeTime || 4);
+        setFieldValue('specialRecoil', preset.recoil || 5);
         setFieldValue('specialText', 'launches a ' + (preset.label || 'special') + ' burst!');
+        updateSpecialDirectionButtons();
         updateOutput();
+      });
+
+      document.getElementById('specialDirection').addEventListener('change', () => {
+        updateSpecialDirectionButtons();
+        updateOutput();
+      });
+
+      document.querySelectorAll('.direction-button').forEach((button) => {
+        button.addEventListener('click', () => {
+          const dir = button.dataset.direction;
+          document.getElementById('specialDirection').value = dir;
+          updateSpecialDirectionButtons();
+          updateOutput();
+        });
       });
 
       document.getElementById('finalType').addEventListener('change', () => {
@@ -753,6 +857,7 @@
       applyAttackPreset('custom');
       applySpecialPreset('custom');
       applyFinalPreset('custom');
+      updateSpecialDirectionButtons();
       updateOutput();
     </script>
   </body>
