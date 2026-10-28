@@ -6,31 +6,35 @@
     <title>ShapeSmash Mod Generator</title>
     <style>
       :root {
-        --bg: #0f172a;
+        --bg: #020817;
+        --bg-2: #0f172a;
         --panel: #111827;
         --panel-2: #1f2937;
-        --accent: #38bdf8;
-        --accent-2: #22c55e;
+        --border: #334155;
         --text: #e5e7eb;
         --muted: #94a3b8;
-        --border: #374151;
-        --code: #0b1220;
+        --accent: #38bdf8;
+        --accent-2: #a78bfa;
+        --green: #34d399;
+        --warn: #fbbf24;
         --danger: #f87171;
+        --code: #0b1120;
       }
 
       * { box-sizing: border-box; }
 
       body {
         margin: 0;
+        min-height: 100vh;
         font-family: Arial, Helvetica, sans-serif;
-        background: linear-gradient(180deg, #020817 0%, var(--bg) 100%);
+        background: linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
         color: var(--text);
       }
 
       .container {
-        max-width: 1100px;
-        margin: 32px auto;
-        padding: 0 18px 48px;
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 28px 20px 40px;
       }
 
       h1 {
@@ -39,30 +43,52 @@
       }
 
       .subtitle {
+        margin-bottom: 22px;
         color: var(--muted);
-        margin-bottom: 24px;
       }
 
       .layout {
         display: grid;
-        grid-template-columns: minmax(320px, 420px) minmax(350px, 1fr);
-        gap: 24px;
+        grid-template-columns: minmax(360px, 480px) minmax(420px, 1fr);
+        gap: 22px;
       }
 
       .panel {
-        background: rgba(17, 24, 39, 0.92);
         border: 1px solid var(--border);
-        border-radius: 16px;
-        box-shadow: 0 10px 35px rgba(0, 0, 0, 0.2);
+        background: rgba(17, 24, 39, 0.95);
+        border-radius: 18px;
+        box-shadow: 0 18px 40px rgba(0, 0, 0, 0.22);
       }
 
       .controls {
-        padding: 20px;
+        padding: 18px;
       }
 
-      form {
+      .section {
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 14px;
+        margin-bottom: 14px;
+        background: rgba(15, 23, 42, 0.7);
+      }
+
+      .section-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 10px;
+      }
+
+      .section-title {
+        font-weight: 700;
+        letter-spacing: 0.02em;
+      }
+
+      .form-grid {
         display: grid;
-        gap: 14px;
+        grid-template-columns: repeat(2, minmax(120px, 1fr));
+        gap: 10px 12px;
       }
 
       .field {
@@ -70,43 +96,66 @@
         gap: 6px;
       }
 
-      .field-row {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(120px, 1fr));
-        gap: 12px;
+      .field.full {
+        grid-column: 1 / -1;
       }
 
       label {
-        font-size: 0.9rem;
         color: var(--muted);
+        font-size: 0.82rem;
       }
 
-      input, textarea, select, button {
-        font: inherit;
+      input, select, textarea, button {
         border-radius: 10px;
         border: 1px solid var(--border);
+        font: inherit;
       }
 
       input, select {
         background: var(--panel-2);
         color: var(--text);
-        padding: 10px 12px;
+        padding: 9px 10px;
+      }
+
+      input[type="color"] {
+        min-height: 42px;
+        padding: 4px;
+        background: #0f172a;
+      }
+
+      input[type="checkbox"] {
+        width: 18px;
+        height: 18px;
+      }
+
+      .checkbox-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        min-height: 42px;
       }
 
       textarea {
         width: 100%;
-        min-height: 420px;
+        min-height: 520px;
+        resize: vertical;
         background: var(--code);
         color: #dbeafe;
-        padding: 16px;
-        border: 1px solid var(--border);
-        resize: vertical;
+        border-color: var(--border);
         line-height: 1.45;
+        padding: 16px;
+      }
+
+      .button-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 8px;
       }
 
       button {
         cursor: pointer;
-        padding: 11px 14px;
+        padding: 10px 14px;
         font-weight: 700;
         transition: transform 0.12s ease, opacity 0.12s ease;
       }
@@ -117,8 +166,8 @@
 
       .primary {
         background: linear-gradient(135deg, var(--accent), #2563eb);
-        color: white;
         border-color: transparent;
+        color: white;
       }
 
       .secondary {
@@ -126,20 +175,20 @@
         color: var(--text);
       }
 
-      .danger {
-        background: rgba(239, 68, 68, 0.12);
-        color: #fecaca;
-        border-color: rgba(239, 68, 68, 0.4);
+      .success {
+        background: rgba(52, 211, 153, 0.12);
+        color: #bbf7d0;
+        border-color: rgba(52, 211, 153, 0.35);
       }
 
-      .button-row {
-        display: flex;
-        gap: 10px;
-        flex-wrap: wrap;
+      .warning {
+        background: rgba(251, 191, 36, 0.12);
+        color: #fde68a;
+        border-color: rgba(251, 191, 36, 0.35);
       }
 
       .preview {
-        padding: 18px;
+        padding: 16px;
       }
 
       .preview-header {
@@ -147,18 +196,18 @@
         align-items: center;
         justify-content: space-between;
         gap: 12px;
-        margin-bottom: 12px;
+        margin-bottom: 10px;
       }
 
-      .live-chip {
+      .live-badge {
         display: inline-flex;
         align-items: center;
         gap: 8px;
-        background: rgba(34, 197, 94, 0.12);
+        background: rgba(52, 211, 153, 0.1);
+        border: 1px solid rgba(52, 211, 153, 0.4);
         color: #bbf7d0;
-        border: 1px solid rgba(34, 197, 94, 0.35);
-        padding: 6px 10px;
         border-radius: 999px;
+        padding: 6px 10px;
         font-size: 0.8rem;
       }
 
@@ -166,11 +215,11 @@
         width: 9px;
         height: 9px;
         border-radius: 50%;
-        background: var(--accent-2);
+        background: var(--green);
         display: inline-block;
       }
 
-      @media (max-width: 860px) {
+      @media (max-width: 980px) {
         .layout {
           grid-template-columns: 1fr;
         }
@@ -180,66 +229,215 @@
   <body>
     <div class="container">
       <h1>ShapeSmash Mod Generator</h1>
-      <div class="subtitle">Build a JavaScript character mod for ShapeSmash and download it instantly.</div>
+      <div class="subtitle">Customize a character mod, load a preset, and export it as a JavaScript file.</div>
 
       <div class="layout">
         <section class="panel controls">
-          <form id="modForm">
-            <div class="field">
-              <label for="name">Character name</label>
-              <input id="name" name="name" value="Turbo Clone" />
+          <div class="section">
+            <div class="section-header">
+              <div class="section-title">Presets</div>
             </div>
+            <div class="form-grid">
+              <div class="field full">
+                <label for="presetSelect">Choose a preset</label>
+                <select id="presetSelect">
+                  <option value="custom">Custom / blank</option>
+                  <option value="brawler">Brawler</option>
+                  <option value="speedster">Speedster</option>
+                  <option value="glass">Glass Cannon</option>
+                  <option value="tank">Tank</option>
+                  <option value="ranger">Ranger</option>
+                  <option value="acrobat">Acrobat</option>
+                  <option value="mage">Mage</option>
+                  <option value="support">Support</option>
+                  <option value="shadow">Shadow Assassin</option>
+                </select>
+              </div>
+              <div class="field full">
+                <div class="button-row">
+                  <button type="button" class="primary" id="loadPresetBtn">Load preset</button>
+                  <button type="button" class="secondary" id="randomBtn">Randomize</button>
+                </div>
+              </div>
+            </div>
+          </div>
 
-            <div class="field-row">
-              <div class="field">
+          <div class="section">
+            <div class="section-header">
+              <div class="section-title">Basic stats</div>
+            </div>
+            <div class="form-grid">
+              <div class="field full">
                 <label for="key">Key</label>
-                <input id="key" name="key" value="turbo-clone" />
+                <input id="key" value="custom-fighter" />
               </div>
-              <div class="field">
+
+              <div class="field full">
+                <label for="name">Name</label>
+                <input id="name" value="Custom Fighter" />
+              </div>
+
+              <div class="field full">
                 <label for="color">Color</label>
-                <input id="color" name="color" type="color" value="#38bdf8" />
+                <input id="color" type="color" value="#38bdf8" />
+              </div>
+
+              <div class="field full">
+                <label for="mySrc">Image URL (optional)</label>
+                <input id="mySrc" placeholder="https://example.com/fighter.png" />
+              </div>
+
+              <div class="field full">
+                <label for="spriteKey">Built-in sprite key (optional)</label>
+                <input id="spriteKey" placeholder="p1Img" />
+              </div>
+
+              <div class="field full">
+                <label for="description">Flavor text</label>
+                <input id="description" value="A balanced fighter built for the arena." />
               </div>
             </div>
+          </div>
 
-            <div class="field-row">
+          <div class="section">
+            <div class="section-header">
+              <div class="section-title">Movement</div>
+            </div>
+            <div class="form-grid">
               <div class="field">
                 <label for="speed">Speed</label>
-                <input id="speed" name="speed" type="number" step="0.1" value="1.35" />
+                <input id="speed" type="number" step="0.1" value="1.3" />
               </div>
-              <div class="field">
-                <label for="attackMultiplier">Attack Multiplier</label>
-                <input id="attackMultiplier" name="attackMultiplier" type="number" step="0.1" value="1.5" />
-              </div>
-            </div>
 
-            <div class="field-row">
               <div class="field">
                 <label for="jumpMultiplier">Jump Multiplier</label>
-                <input id="jumpMultiplier" name="jumpMultiplier" type="number" step="0.1" value="1.2" />
+                <input id="jumpMultiplier" type="number" step="0.1" value="1.2" />
               </div>
+
+              <div class="field">
+                <label for="canGlide">Glide</label>
+                <div class="checkbox-row">
+                  <input id="canGlide" type="checkbox" checked />
+                  <span>Enabled</span>
+                </div>
+              </div>
+
+              <div class="field">
+                <label for="glideGravityMultiplier">Glide Gravity</label>
+                <input id="glideGravityMultiplier" type="number" step="0.01" value="0.08" />
+              </div>
+
+              <div class="field">
+                <label for="glideFallSpeed">Glide Fall Speed</label>
+                <input id="glideFallSpeed" type="number" step="0.1" value="2.3" />
+              </div>
+
               <div class="field">
                 <label for="sizeMultiplier">Size Multiplier</label>
-                <input id="sizeMultiplier" name="sizeMultiplier" type="number" step="0.1" value="1" />
+                <input id="sizeMultiplier" type="number" step="0.1" value="1.0" />
               </div>
             </div>
+          </div>
 
-            <div class="field">
-              <label for="description">Flavor text</label>
-              <input id="description" name="description" value="A quick, aggressive clone built for pressure." />
+          <div class="section">
+            <div class="section-header">
+              <div class="section-title">Combat</div>
             </div>
+            <div class="form-grid">
+              <div class="field">
+                <label for="attackMultiplier">Attack Multiplier</label>
+                <input id="attackMultiplier" type="number" step="0.1" value="1.5" />
+              </div>
 
-            <div class="button-row">
-              <button type="button" class="primary" id="generateBtn">Generate code</button>
-              <button type="button" class="secondary" id="randomBtn">Randomize</button>
-              <button type="button" class="danger" id="downloadBtn">Download .js</button>
+              <div class="field">
+                <label for="fallDamageMultiplier">Fall Damage Multiplier</label>
+                <input id="fallDamageMultiplier" type="number" step="0.1" value="1.0" />
+              </div>
+
+              <div class="field">
+                <label for="passiveFallDamage">Passive Fall Damage</label>
+                <div class="checkbox-row">
+                  <input id="passiveFallDamage" type="checkbox" />
+                  <span>Enabled</span>
+                </div>
+              </div>
+
+              <div class="field">
+                <label for="specialPower">Special Power</label>
+                <input id="specialPower" type="number" step="1" value="18" />
+              </div>
+
+              <div class="field">
+                <label for="specialCooldown">Special Cooldown</label>
+                <input id="specialCooldown" type="number" step="1" value="45" />
+              </div>
+
+              <div class="field">
+                <label for="specialType">Special Type</label>
+                <select id="specialType">
+                  <option value="special">special</option>
+                  <option value="upSpecial">upSpecial</option>
+                  <option value="downSpecial">downSpecial</option>
+                  <option value="leftSpecial">leftSpecial</option>
+                  <option value="rightSpecial">rightSpecial</option>
+                </select>
+              </div>
+
+              <div class="field full">
+                <label for="attackText">Attack callout</label>
+                <input id="attackText" value="launches a quick combo swing!" />
+              </div>
+
+              <div class="field full">
+                <label for="specialText">Special callout</label>
+                <input id="specialText" value="dashes forward with a burst attack!" />
+              </div>
             </div>
-          </form>
+          </div>
+
+          <div class="section">
+            <div class="section-header">
+              <div class="section-title">Controls</div>
+            </div>
+            <div class="form-grid">
+              <div class="field">
+                <label for="leftKey">Left</label>
+                <input id="leftKey" value="a" />
+              </div>
+              <div class="field">
+                <label for="rightKey">Right</label>
+                <input id="rightKey" value="d" />
+              </div>
+              <div class="field">
+                <label for="jumpKey">Jump</label>
+                <input id="jumpKey" value="w" />
+              </div>
+              <div class="field">
+                <label for="attackKey">Attack</label>
+                <input id="attackKey" value="f" />
+              </div>
+              <div class="field">
+                <label for="finalKey">Final</label>
+                <input id="finalKey" value="g" />
+              </div>
+              <div class="field">
+                <label for="specialKey">Special</label>
+                <input id="specialKey" value="s" />
+              </div>
+            </div>
+          </div>
+
+          <div class="button-row">
+            <button type="button" class="primary" id="generateBtn">Generate Mod</button>
+            <button type="button" class="secondary" id="copyBtn">Copy Code</button>
+            <button type="button" class="success" id="downloadBtn">Download .js</button>
+          </div>
         </section>
 
         <section class="panel preview">
           <div class="preview-header">
             <strong>Generated mod</strong>
-            <span class="live-chip"><span class="dot"></span>JS ready</span>
+            <span class="live-badge"><span class="dot"></span>Ready</span>
           </div>
           <textarea id="output" aria-label="Generated mod code"></textarea>
         </section>
@@ -248,103 +446,457 @@
 
     <script src="./helpers/modMaker.js"></script>
     <script>
-      const form = document.getElementById('modForm');
-      const output = document.getElementById('output');
+      const presets = {
+        custom: {
+          key: 'custom-fighter',
+          name: 'Custom Fighter',
+          color: '#38bdf8',
+          mySrc: '',
+          spriteKey: '',
+          description: 'A balanced fighter built for the arena.',
+          speed: 1.3,
+          jumpMultiplier: 1.2,
+          canGlide: true,
+          glideGravityMultiplier: 0.08,
+          glideFallSpeed: 2.3,
+          sizeMultiplier: 1,
+          attackMultiplier: 1.5,
+          fallDamageMultiplier: 1,
+          passiveFallDamage: false,
+          specialPower: 18,
+          specialCooldown: 45,
+          specialType: 'special',
+          attackText: 'launches a quick combo swing!',
+          specialText: 'dashes forward with a burst attack!',
+          leftKey: 'a',
+          rightKey: 'd',
+          jumpKey: 'w',
+          attackKey: 'f',
+          finalKey: 'g',
+          specialKey: 's'
+        },
+        brawler: {
+          key: 'brawler',
+          name: 'Brawler',
+          color: '#f97316',
+          mySrc: '',
+          spriteKey: '',
+          description: 'A close-range bruiser who wins by pressure.',
+          speed: 1.0,
+          jumpMultiplier: 1.0,
+          canGlide: false,
+          glideGravityMultiplier: 0.07,
+          glideFallSpeed: 2.2,
+          sizeMultiplier: 1.2,
+          attackMultiplier: 1.9,
+          fallDamageMultiplier: 1.2,
+          passiveFallDamage: true,
+          specialPower: 25,
+          specialCooldown: 60,
+          specialType: 'special',
+          attackText: 'throws a crushing haymaker!',
+          specialText: 'charges in with a shove and slam!',
+          leftKey: 'a',
+          rightKey: 'd',
+          jumpKey: 'w',
+          attackKey: 'f',
+          finalKey: 'g',
+          specialKey: 's'
+        },
+        speedster: {
+          key: 'speedster',
+          name: 'Speedster',
+          color: '#22c55e',
+          mySrc: '',
+          spriteKey: '',
+          description: 'A fast skirmisher that overwhelms with movement.',
+          speed: 1.7,
+          jumpMultiplier: 1.2,
+          canGlide: true,
+          glideGravityMultiplier: 0.06,
+          glideFallSpeed: 2.6,
+          sizeMultiplier: 0.95,
+          attackMultiplier: 1.25,
+          fallDamageMultiplier: 0.9,
+          passiveFallDamage: false,
+          specialPower: 16,
+          specialCooldown: 35,
+          specialType: 'leftSpecial',
+          attackText: 'slashes in with a rapid burst!',
+          specialText: 'blasts sideways and dashes through space!',
+          leftKey: 'a',
+          rightKey: 'd',
+          jumpKey: 'w',
+          attackKey: 'f',
+          finalKey: 'g',
+          specialKey: 's'
+        },
+        glass: {
+          key: 'glass-cannon',
+          name: 'Glass Cannon',
+          color: '#f43f5e',
+          mySrc: '',
+          spriteKey: '',
+          description: 'A fragile monster that deals huge damage.',
+          speed: 1.25,
+          jumpMultiplier: 1.15,
+          canGlide: false,
+          glideGravityMultiplier: 0.07,
+          glideFallSpeed: 2.4,
+          sizeMultiplier: 0.9,
+          attackMultiplier: 2.4,
+          fallDamageMultiplier: 1.2,
+          passiveFallDamage: false,
+          specialPower: 24,
+          specialCooldown: 48,
+          specialType: 'upSpecial',
+          attackText: 'fires a devastating strike!',
+          specialText: 'surges upward in a violent burst!',
+          leftKey: 'a',
+          rightKey: 'd',
+          jumpKey: 'w',
+          attackKey: 'f',
+          finalKey: 'g',
+          specialKey: 's'
+        },
+        tank: {
+          key: 'tank',
+          name: 'Tank',
+          color: '#64748b',
+          mySrc: '',
+          spriteKey: '',
+          description: 'A durable defender who absorbs pressure.',
+          speed: 0.85,
+          jumpMultiplier: 0.9,
+          canGlide: true,
+          glideGravityMultiplier: 0.09,
+          glideFallSpeed: 1.8,
+          sizeMultiplier: 1.4,
+          attackMultiplier: 1.6,
+          fallDamageMultiplier: 1.6,
+          passiveFallDamage: true,
+          specialPower: 19,
+          specialCooldown: 58,
+          specialType: 'downSpecial',
+          attackText: 'slams the ground with a heavy strike!',
+          specialText: 'drops a shockwave barrier with force!',
+          leftKey: 'a',
+          rightKey: 'd',
+          jumpKey: 'w',
+          attackKey: 'f',
+          finalKey: 'g',
+          specialKey: 's'
+        },
+        ranger: {
+          key: 'ranger',
+          name: 'Ranger',
+          color: '#0ea5e9',
+          mySrc: '',
+          spriteKey: '',
+          description: 'A precision fighter who controls space.',
+          speed: 1.2,
+          jumpMultiplier: 1.1,
+          canGlide: true,
+          glideGravityMultiplier: 0.08,
+          glideFallSpeed: 2.2,
+          sizeMultiplier: 1,
+          attackMultiplier: 1.45,
+          fallDamageMultiplier: 1,
+          passiveFallDamage: false,
+          specialPower: 20,
+          specialCooldown: 52,
+          specialType: 'rightSpecial',
+          attackText: 'fires a piercing shot!',
+          specialText: 'fires a sweeping ranged burst!',
+          leftKey: 'a',
+          rightKey: 'd',
+          jumpKey: 'w',
+          attackKey: 'f',
+          finalKey: 'g',
+          specialKey: 's'
+        },
+        acrobat: {
+          key: 'acrobat',
+          name: 'Acrobat',
+          color: '#a78bfa',
+          mySrc: '',
+          spriteKey: '',
+          description: 'A nimble all-rounder with aerial pressure.',
+          speed: 1.45,
+          jumpMultiplier: 1.45,
+          canGlide: true,
+          glideGravityMultiplier: 0.05,
+          glideFallSpeed: 2.9,
+          sizeMultiplier: 0.92,
+          attackMultiplier: 1.3,
+          fallDamageMultiplier: 0.9,
+          passiveFallDamage: false,
+          specialPower: 17,
+          specialCooldown: 38,
+          specialType: 'upSpecial',
+          attackText: 'spins through the air and strikes!',
+          specialText: 'soars upward in a floating burst!',
+          leftKey: 'a',
+          rightKey: 'd',
+          jumpKey: 'w',
+          attackKey: 'f',
+          finalKey: 'g',
+          specialKey: 's'
+        },
+        mage: {
+          key: 'mage',
+          name: 'Mage',
+          color: '#8b5cf6',
+          mySrc: '',
+          spriteKey: '',
+          description: 'A spellcaster focused on burst and spacing.',
+          speed: 1.12,
+          jumpMultiplier: 1.16,
+          canGlide: true,
+          glideGravityMultiplier: 0.067,
+          glideFallSpeed: 2.35,
+          sizeMultiplier: 0.96,
+          attackMultiplier: 1.7,
+          fallDamageMultiplier: 0.95,
+          passiveFallDamage: false,
+          specialPower: 28,
+          specialCooldown: 65,
+          specialType: 'special',
+          attackText: 'casts a focused arcane strike!',
+          specialText: 'channels a wild magic burst!',
+          leftKey: 'a',
+          rightKey: 'd',
+          jumpKey: 'w',
+          attackKey: 'f',
+          finalKey: 'g',
+          specialKey: 's'
+        },
+        support: {
+          key: 'support',
+          name: 'Support',
+          color: '#2dd4bf',
+          mySrc: '',
+          spriteKey: '',
+          description: 'A utility fighter who controls tempo and space.',
+          speed: 1.08,
+          jumpMultiplier: 1.1,
+          canGlide: true,
+          glideGravityMultiplier: 0.065,
+          glideFallSpeed: 2.15,
+          sizeMultiplier: 1.05,
+          attackMultiplier: 1.2,
+          fallDamageMultiplier: 0.8,
+          passiveFallDamage: false,
+          specialPower: 15,
+          specialCooldown: 42,
+          specialType: 'downSpecial',
+          attackText: 'briefly disrupts the opponent with precision!',
+          specialText: 'stabilizes flow and launches a pulse!',
+          leftKey: 'a',
+          rightKey: 'd',
+          jumpKey: 'w',
+          attackKey: 'f',
+          finalKey: 'g',
+          specialKey: 's'
+        },
+        shadow: {
+          key: 'shadow-assassin',
+          name: 'Shadow Assassin',
+          color: '#111827',
+          mySrc: '',
+          spriteKey: '',
+          description: 'A stealthy assassin built for quick, lethal strikes.',
+          speed: 1.6,
+          jumpMultiplier: 1.35,
+          canGlide: true,
+          glideGravityMultiplier: 0.06,
+          glideFallSpeed: 2.8,
+          sizeMultiplier: 0.88,
+          attackMultiplier: 1.8,
+          fallDamageMultiplier: 0.95,
+          passiveFallDamage: false,
+          specialPower: 21,
+          specialCooldown: 40,
+          specialType: 'leftSpecial',
+          attackText: 'slashes from the dark with a hidden strike!',
+          specialText: 'vanishes into motion and cuts across space!',
+          leftKey: 'a',
+          rightKey: 'd',
+          jumpKey: 'w',
+          attackKey: 'f',
+          finalKey: 'g',
+          specialKey: 's'
+        }
+      };
 
-      function buildModText(values) {
-        const safeKey = values.key.trim() || 'generated-character';
-        const safeName = values.name.trim() || 'Generated Character';
-        const color = values.color || '#38bdf8';
-        const speed = Number(values.speed || 1);
-        const attackMultiplier = Number(values.attackMultiplier || 1);
-        const jumpMultiplier = Number(values.jumpMultiplier || 1);
-        const sizeMultiplier = Number(values.sizeMultiplier || 1);
-        const description = values.description?.trim() || 'Custom fighter';
-
-        return `Mods.registerCharacter({
-  key: '${safeKey}',
-  name: '${safeName}',
-  color: '${color}',
-  speed: ${speed},
-  jumpMultiplier: ${jumpMultiplier},
-  sizeMultiplier: ${sizeMultiplier},
-  attackMultiplier: ${attackMultiplier},
-  description: '${description.replace(/'/g, "\\'")}',
-
-  keys: {
-    left: 'a',
-    right: 'd',
-    jump: 'w',
-    attack: 'f',
-    final: 'g',
-    special: 's'
-  },
-
-  attack(fighter, opponent) {
-    if (fighter.stocks <= 0 || fighter.attackCooldown > 0 || fighter.stunned > 0) return;
-
-    fighter.attackCooldown = 25;
-    fighter.punchFrame = 0;
-    fighter.punchAnimating = true;
-    addCommentary(fighter.name + ' launches a quick combo swing!');
-  },
-
-  special(fighter, opponent) {
-    if (fighter.specialCooldown > 0 || fighter.stunned > 0) return;
-
-    const target = fighter.getOpponent();
-    fighter.vx += fighter.facing * 18;
-    fighter.specialCooldown = 45;
-    addCommentary(fighter.name + ' dashes forward with a burst attack!');
-
-    if (target) {
-      target.vx += fighter.facing * 5;
-    }
-  }
-});`;
+      function setFieldValue(id, value) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        if (el.type === 'checkbox') {
+          el.checked = Boolean(value);
+        } else {
+          el.value = value ?? '';
+        }
       }
 
-      function collectValues() {
-        const formData = new FormData(form);
-        return Object.fromEntries(formData.entries());
-      }
+      function applyPreset(name) {
+        const preset = presets[name];
+        if (!preset) return;
 
-      function updateOutput() {
-        output.value = buildModText(collectValues());
-      }
+        Object.entries(preset).forEach(([key, value]) => {
+          const fieldIds = {
+            key: 'key',
+            name: 'name',
+            color: 'color',
+            mySrc: 'mySrc',
+            spriteKey: 'spriteKey',
+            description: 'description',
+            speed: 'speed',
+            jumpMultiplier: 'jumpMultiplier',
+            canGlide: 'canGlide',
+            glideGravityMultiplier: 'glideGravityMultiplier',
+            glideFallSpeed: 'glideFallSpeed',
+            sizeMultiplier: 'sizeMultiplier',
+            attackMultiplier: 'attackMultiplier',
+            fallDamageMultiplier: 'fallDamageMultiplier',
+            passiveFallDamage: 'passiveFallDamage',
+            specialPower: 'specialPower',
+            specialCooldown: 'specialCooldown',
+            specialType: 'specialType',
+            attackText: 'attackText',
+            specialText: 'specialText',
+            leftKey: 'leftKey',
+            rightKey: 'rightKey',
+            jumpKey: 'jumpKey',
+            attackKey: 'attackKey',
+            finalKey: 'finalKey',
+            specialKey: 'specialKey'
+          };
 
-      function applyRandomValues() {
-        const random = makeRandomChar();
-        const names = ['Nova Clone', 'Spark Bot', 'Turbo Runner', 'Echo Bot', 'Blitz Unit', 'Pixel Fury'];
-        const chosenName = names[Math.floor(Math.random() * names.length)];
+          const id = fieldIds[key];
+          if (id) setFieldValue(id, value);
+        });
 
-        document.getElementById('name').value = chosenName;
-        document.getElementById('key').value = (chosenName.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'random-clone');
-        document.getElementById('speed').value = (Math.random() * 1 + 1).toFixed(2);
-        document.getElementById('attackMultiplier').value = (Math.random() * 1.6 + 1.1).toFixed(2);
-        document.getElementById('jumpMultiplier').value = (Math.random() * 0.9 + 1).toFixed(2);
-        document.getElementById('sizeMultiplier').value = (Math.random() * 0.8 + 0.9).toFixed(2);
-        document.getElementById('description').value = `A generated ${chosenName.toLowerCase()} built for fast movement.`;
-        const hue = Math.floor(Math.random() * 360);
-        document.getElementById('color').value = `hsl(${hue} 85% 60%)`;
         updateOutput();
       }
 
-      document.getElementById('generateBtn').addEventListener('click', updateOutput);
-      document.getElementById('randomBtn').addEventListener('click', applyRandomValues);
-      document.getElementById('downloadBtn').addEventListener('click', () => {
-        const code = output.value.trim();
-        const blob = new Blob([code + '\n'], { type: 'application/javascript' });
+      function getValue(id, fallback = '') {
+        const el = document.getElementById(id);
+        if (!el) return fallback;
+        if (el.type === 'checkbox') return el.checked;
+        return el.value ?? fallback;
+      }
+
+      function escapeString(value) {
+        return String(value).replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+      }
+
+      function getSpecialMethodName() {
+        const type = getValue('specialType', 'special');
+        return type === 'special' ? 'special' : type;
+      }
+
+      function buildModText() {
+        const key = getValue('key', 'custom-fighter').trim() || 'custom-fighter';
+        const name = getValue('name', 'Custom Fighter').trim() || 'Custom Fighter';
+        const color = getValue('color', '#38bdf8');
+        const mySrc = getValue('mySrc', '').trim();
+        const spriteKey = getValue('spriteKey', '').trim();
+        const description = getValue('description', 'Custom fighter').trim() || 'Custom fighter';
+        const speed = Number(getValue('speed', 1.3));
+        const jumpMultiplier = Number(getValue('jumpMultiplier', 1.2));
+        const canGlide = Boolean(getValue('canGlide', true));
+        const glideGravityMultiplier = Number(getValue('glideGravityMultiplier', 0.08));
+        const glideFallSpeed = Number(getValue('glideFallSpeed', 2.3));
+        const sizeMultiplier = Number(getValue('sizeMultiplier', 1));
+        const attackMultiplier = Number(getValue('attackMultiplier', 1.5));
+        const fallDamageMultiplier = Number(getValue('fallDamageMultiplier', 1));
+        const passiveFallDamage = Boolean(getValue('passiveFallDamage', false));
+        const specialPower = Number(getValue('specialPower', 18));
+        const specialCooldown = Number(getValue('specialCooldown', 45));
+        const specialType = getValue('specialType', 'special');
+        const attackText = escapeString(getValue('attackText', 'launches a quick combo swing!'));
+        const specialText = escapeString(getValue('specialText', 'dashes forward with a burst attack!'));
+
+        const keys = {
+          left: escapeString(getValue('leftKey', 'a')),
+          right: escapeString(getValue('rightKey', 'd')),
+          jump: escapeString(getValue('jumpKey', 'w')),
+          attack: escapeString(getValue('attackKey', 'f')),
+          final: escapeString(getValue('finalKey', 'g')),
+          special: escapeString(getValue('specialKey', 's'))
+        };
+
+        const mySrcLine = mySrc ? `  mySrc: '${escapeString(mySrc)}',\n` : '';
+        const spriteKeyLine = spriteKey ? `  spriteKey: '${escapeString(spriteKey)}',\n` : '';
+        const specialMethod = specialType === 'special' ? 'special' : specialType;
+
+        return `Mods.registerCharacter({\n  key: '${escapeString(key)}',\n  name: '${escapeString(name)}',\n  color: '${escapeString(color)}',\n${mySrcLine}${spriteKeyLine}  description: '${escapeString(description)}',\n  speed: ${speed},\n  jumpMultiplier: ${jumpMultiplier},\n  canGlide: ${canGlide},\n  glideGravityMultiplier: ${glideGravityMultiplier},\n  glideFallSpeed: ${glideFallSpeed},\n  sizeMultiplier: ${sizeMultiplier},\n  attackMultiplier: ${attackMultiplier},\n  passiveFallDamage: ${passiveFallDamage},\n  fallDamageMultiplier: ${fallDamageMultiplier},\n\n  keys: {\n    left: '${keys.left}',\n    right: '${keys.right}',\n    jump: '${keys.jump}',\n    attack: '${keys.attack}',\n    final: '${keys.final}',\n    special: '${keys.special}'\n  },\n\n  attack(fighter, opponent) {\n    if (fighter.stocks <= 0 || fighter.attackCooldown > 0 || fighter.stunned > 0) return;\n\n    fighter.attackCooldown = 25;\n    fighter.punchFrame = 0;\n    fighter.punchAnimating = true;\n    addCommentary(fighter.name + ' ${attackText}');\n  },\n\n  ${specialMethod}(fighter, opponent) {\n    if (fighter.specialCooldown > 0 || fighter.stunned > 0) return;\n\n    const target = fighter.getOpponent();\n    fighter.vx += fighter.facing * ${specialPower};\n    fighter.specialCooldown = ${specialCooldown};\n    addCommentary(fighter.name + ' ${specialText}');\n\n    if (target) {\n      target.vx += fighter.facing * 3;\n    }\n  }\n});`;
+      }
+
+      function updateOutput() {
+        const output = document.getElementById('output');
+        output.value = buildModText();
+      }
+
+      function randomColor() {
+        const hue = Math.floor(Math.random() * 360);
+        return `hsl(${hue} 85% 60%)`;
+      }
+
+      function randomizeForm() {
+        const presetNames = Object.keys(presets).filter(name => name !== 'custom');
+        const chosen = presetNames[Math.floor(Math.random() * presetNames.length)];
+        applyPreset(chosen);
+        document.getElementById('presetSelect').value = chosen;
+      }
+
+      function copyCode() {
+        const output = document.getElementById('output');
+        output.select();
+        navigator.clipboard.writeText(output.value).then(() => {
+          const button = document.getElementById('copyBtn');
+          const prev = button.textContent;
+          button.textContent = 'Copied!';
+          setTimeout(() => { button.textContent = prev; }, 1000);
+        }).catch(() => {
+          alert('Copy failed. You can still select the code manually.');
+        });
+      }
+
+      function downloadFile() {
+        const text = document.getElementById('output').value;
+        const filename = `${document.getElementById('key').value.trim() || 'custom-fighter'}.js`;
+        const blob = new Blob([text + '\n'], { type: 'application/javascript' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = `${document.getElementById('key').value || 'generated-character'}.js`;
+        a.download = filename;
         a.click();
         URL.revokeObjectURL(url);
+      }
+
+      document.getElementById('generateBtn').addEventListener('click', updateOutput);
+      document.getElementById('copyBtn').addEventListener('click', copyCode);
+      document.getElementById('downloadBtn').addEventListener('click', downloadFile);
+      document.getElementById('loadPresetBtn').addEventListener('click', () => {
+        const selected = document.getElementById('presetSelect').value;
+        applyPreset(selected);
+      });
+      document.getElementById('randomBtn').addEventListener('click', randomizeForm);
+
+      Object.keys(presets).forEach((name) => {
+        if (name === 'custom') {
+          document.getElementById('presetSelect').value = name;
+        }
       });
 
-      form.addEventListener('input', updateOutput);
-      updateOutput();
+      document.querySelectorAll('input, select').forEach((element) => {
+        element.addEventListener('input', updateOutput);
+        element.addEventListener('change', updateOutput);
+      });
+
+      applyPreset('custom');
     </script>
   </body>
 </html>
