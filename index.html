@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ShapeSmash Mod Generator</title>
+    <style>
+      :root {
+        --bg: #0f172a;
+        --panel: #111827;
+        --panel-2: #1f2937;
+        --accent: #38bdf8;
+        --accent-2: #22c55e;
+        --text: #e5e7eb;
+        --muted: #94a3b8;
+        --border: #374151;
+        --code: #0b1220;
+        --danger: #f87171;
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        background: linear-gradient(180deg, #020817 0%, var(--bg) 100%);
+        color: var(--text);
+      }
+
+      .container {
+        max-width: 1100px;
+        margin: 32px auto;
+        padding: 0 18px 48px;
+      }
+
+      h1 {
+        margin: 0 0 8px;
+        font-size: clamp(2rem, 4vw, 3rem);
+      }
+
+      .subtitle {
+        color: var(--muted);
+        margin-bottom: 24px;
+      }
+
+      .layout {
+        display: grid;
+        grid-template-columns: minmax(320px, 420px) minmax(350px, 1fr);
+        gap: 24px;
+      }
+
+      .panel {
+        background: rgba(17, 24, 39, 0.92);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        box-shadow: 0 10px 35px rgba(0, 0, 0, 0.2);
+      }
+
+      .controls {
+        padding: 20px;
+      }
+
+      form {
+        display: grid;
+        gap: 14px;
+      }
+
+      .field {
+        display: grid;
+        gap: 6px;
+      }
+
+      .field-row {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(120px, 1fr));
+        gap: 12px;
+      }
+
+      label {
+        font-size: 0.9rem;
+        color: var(--muted);
+      }
+
+      input, textarea, select, button {
+        font: inherit;
+        border-radius: 10px;
+        border: 1px solid var(--border);
+      }
+
+      input, select {
+        background: var(--panel-2);
+        color: var(--text);
+        padding: 10px 12px;
+      }
+
+      textarea {
+        width: 100%;
+        min-height: 420px;
+        background: var(--code);
+        color: #dbeafe;
+        padding: 16px;
+        border: 1px solid var(--border);
+        resize: vertical;
+        line-height: 1.45;
+      }
+
+      button {
+        cursor: pointer;
+        padding: 11px 14px;
+        font-weight: 700;
+        transition: transform 0.12s ease, opacity 0.12s ease;
+      }
+
+      button:hover {
+        transform: translateY(-1px);
+      }
+
+      .primary {
+        background: linear-gradient(135deg, var(--accent), #2563eb);
+        color: white;
+        border-color: transparent;
+      }
+
+      .secondary {
+        background: var(--panel-2);
+        color: var(--text);
+      }
+
+      .danger {
+        background: rgba(239, 68, 68, 0.12);
+        color: #fecaca;
+        border-color: rgba(239, 68, 68, 0.4);
+      }
+
+      .button-row {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .preview {
+        padding: 18px;
+      }
+
+      .preview-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 12px;
+      }
+
+      .live-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(34, 197, 94, 0.12);
+        color: #bbf7d0;
+        border: 1px solid rgba(34, 197, 94, 0.35);
+        padding: 6px 10px;
+        border-radius: 999px;
+        font-size: 0.8rem;
+      }
+
+      .dot {
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        background: var(--accent-2);
+        display: inline-block;
+      }
+
+      @media (max-width: 860px) {
+        .layout {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>ShapeSmash Mod Generator</h1>
+      <div class="subtitle">Build a JavaScript character mod for ShapeSmash and download it instantly.</div>
+
+      <div class="layout">
+        <section class="panel controls">
+          <form id="modForm">
+            <div class="field">
+              <label for="name">Character name</label>
+              <input id="name" name="name" value="Turbo Clone" />
+            </div>
+
+            <div class="field-row">
+              <div class="field">
+                <label for="key">Key</label>
+                <input id="key" name="key" value="turbo-clone" />
+              </div>
+              <div class="field">
+                <label for="color">Color</label>
+                <input id="color" name="color" type="color" value="#38bdf8" />
+              </div>
+            </div>
+
+            <div class="field-row">
+              <div class="field">
+                <label for="speed">Speed</label>
+                <input id="speed" name="speed" type="number" step="0.1" value="1.35" />
+              </div>
+              <div class="field">
+                <label for="attackMultiplier">Attack Multiplier</label>
+                <input id="attackMultiplier" name="attackMultiplier" type="number" step="0.1" value="1.5" />
+              </div>
+            </div>
+
+            <div class="field-row">
+              <div class="field">
+                <label for="jumpMultiplier">Jump Multiplier</label>
+                <input id="jumpMultiplier" name="jumpMultiplier" type="number" step="0.1" value="1.2" />
+              </div>
+              <div class="field">
+                <label for="sizeMultiplier">Size Multiplier</label>
+                <input id="sizeMultiplier" name="sizeMultiplier" type="number" step="0.1" value="1" />
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="description">Flavor text</label>
+              <input id="description" name="description" value="A quick, aggressive clone built for pressure." />
+            </div>
+
+            <div class="button-row">
+              <button type="button" class="primary" id="generateBtn">Generate code</button>
+              <button type="button" class="secondary" id="randomBtn">Randomize</button>
+              <button type="button" class="danger" id="downloadBtn">Download .js</button>
+            </div>
+          </form>
+        </section>
+
+        <section class="panel preview">
+          <div class="preview-header">
+            <strong>Generated mod</strong>
+            <span class="live-chip"><span class="dot"></span>JS ready</span>
+          </div>
+          <textarea id="output" aria-label="Generated mod code"></textarea>
+        </section>
+      </div>
+    </div>
+
+    <script src="./helpers/modMaker.js"></script>
+    <script>
+      const form = document.getElementById('modForm');
+      const output = document.getElementById('output');
+
+      function buildModText(values) {
+        const safeKey = values.key.trim() || 'generated-character';
+        const safeName = values.name.trim() || 'Generated Character';
+        const color = values.color || '#38bdf8';
+        const speed = Number(values.speed || 1);
+        const attackMultiplier = Number(values.attackMultiplier || 1);
+        const jumpMultiplier = Number(values.jumpMultiplier || 1);
+        const sizeMultiplier = Number(values.sizeMultiplier || 1);
+        const description = values.description?.trim() || 'Custom fighter';
+
+        return `Mods.registerCharacter({
+  key: '${safeKey}',
+  name: '${safeName}',
+  color: '${color}',
+  speed: ${speed},
+  jumpMultiplier: ${jumpMultiplier},
+  sizeMultiplier: ${sizeMultiplier},
+  attackMultiplier: ${attackMultiplier},
+  description: '${description.replace(/'/g, "\\'")}',
+
+  keys: {
+    left: 'a',
+    right: 'd',
+    jump: 'w',
+    attack: 'f',
+    final: 'g',
+    special: 's'
+  },
+
+  attack(fighter, opponent) {
+    if (fighter.stocks <= 0 || fighter.attackCooldown > 0 || fighter.stunned > 0) return;
+
+    fighter.attackCooldown = 25;
+    fighter.punchFrame = 0;
+    fighter.punchAnimating = true;
+    addCommentary(fighter.name + ' launches a quick combo swing!');
+  },
+
+  special(fighter, opponent) {
+    if (fighter.specialCooldown > 0 || fighter.stunned > 0) return;
+
+    const target = fighter.getOpponent();
+    fighter.vx += fighter.facing * 18;
+    fighter.specialCooldown = 45;
+    addCommentary(fighter.name + ' dashes forward with a burst attack!');
+
+    if (target) {
+      target.vx += fighter.facing * 5;
+    }
+  }
+});`;
+      }
+
+      function collectValues() {
+        const formData = new FormData(form);
+        return Object.fromEntries(formData.entries());
+      }
+
+      function updateOutput() {
+        output.value = buildModText(collectValues());
+      }
+
+      function applyRandomValues() {
+        const random = makeRandomChar();
+        const names = ['Nova Clone', 'Spark Bot', 'Turbo Runner', 'Echo Bot', 'Blitz Unit', 'Pixel Fury'];
+        const chosenName = names[Math.floor(Math.random() * names.length)];
+
+        document.getElementById('name').value = chosenName;
+        document.getElementById('key').value = (chosenName.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'random-clone');
+        document.getElementById('speed').value = (Math.random() * 1 + 1).toFixed(2);
+        document.getElementById('attackMultiplier').value = (Math.random() * 1.6 + 1.1).toFixed(2);
+        document.getElementById('jumpMultiplier').value = (Math.random() * 0.9 + 1).toFixed(2);
+        document.getElementById('sizeMultiplier').value = (Math.random() * 0.8 + 0.9).toFixed(2);
+        document.getElementById('description').value = `A generated ${chosenName.toLowerCase()} built for fast movement.`;
+        const hue = Math.floor(Math.random() * 360);
+        document.getElementById('color').value = `hsl(${hue} 85% 60%)`;
+        updateOutput();
+      }
+
+      document.getElementById('generateBtn').addEventListener('click', updateOutput);
+      document.getElementById('randomBtn').addEventListener('click', applyRandomValues);
+      document.getElementById('downloadBtn').addEventListener('click', () => {
+        const code = output.value.trim();
+        const blob = new Blob([code + '\n'], { type: 'application/javascript' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${document.getElementById('key').value || 'generated-character'}.js`;
+        a.click();
+        URL.revokeObjectURL(url);
+      });
+
+      form.addEventListener('input', updateOutput);
+      updateOutput();
+    </script>
+  </body>
+</html>
